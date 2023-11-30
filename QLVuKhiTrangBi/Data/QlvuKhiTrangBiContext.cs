@@ -446,15 +446,14 @@ public partial class QlvuKhiTrangBiContext : DbContext
 
         modelBuilder.Entity<YeucauLoaitb>(entity =>
         {
-            entity.HasKey(e => new { e.MaYc, e.MaLoaiTb });
+            entity.HasKey(e => new { e.MaYc, e.MaTrangBi });
 
             entity.ToTable("YEUCAU_LOAITB");
 
             entity.Property(e => e.MaYc).HasColumnName("MaYC");
-            entity.Property(e => e.MaLoaiTb)
+            entity.Property(e => e.MaTrangBi)
                 .HasMaxLength(10)
-                .IsFixedLength()
-                .HasColumnName("MaLoaiTB");
+                .IsFixedLength();
             entity.Property(e => e.GhiChu).HasColumnType("ntext");
 
             entity.HasOne(d => d.MaYcNavigation).WithMany(p => p.YeucauLoaitbs)
@@ -481,6 +480,7 @@ public partial class QlvuKhiTrangBiContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.ThoiGianDuKienMuon).HasColumnType("datetime");
             entity.Property(e => e.ThoiGianDuKienTra).HasColumnType("datetime");
+            entity.Property(e => e.TrangThai).HasMaxLength(50);
 
             entity.HasOne(d => d.MaCanBoDaiDoiNavigation).WithMany(p => p.Yeucaumuonvktbs)
                 .HasForeignKey(d => d.MaCanBoDaiDoi)

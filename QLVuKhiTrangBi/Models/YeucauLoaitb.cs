@@ -7,7 +7,7 @@ public partial class YeucauLoaitb
 {
     public int MaYc { get; set; }
 
-    public string MaLoaiTb { get; set; } = null!;
+    public string MaTrangBi { get; set; } = null!;
 
     public int? SoLuong { get; set; }
 

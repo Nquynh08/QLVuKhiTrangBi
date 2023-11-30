@@ -1,0 +1,22 @@
+﻿@model IEnumerable<QLVuKhiTrangBi.Models.Yeucaumuonvktb>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="d-flex justify-content-end m-3 mr-5">
+    <a href="/DonDeNghi/Create" class="btn btn-primary">Thêm yêu cầu mới</a>
+</div>
+
+
+<div id="allDonDeNghi"></div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#allDonDeNghi').load('/DonDeNghi/DSDNDaiDoi');
+        });
+    </script>
+}
+
+

@@ -1,0 +1,223 @@
+﻿@model QLVuKhiTrangBi.Models.Yeucaumuonvktb
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var jsonDsLoaiSung = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.dsLoaiSung);
+    var jsonDsTB = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.dsTB);
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Thêm yêu cầu mượn vũ khí trang bị</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <form asp-action="Index" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group row">
+                                <label asp-for="MaDaiDoi" class="col-sm-4 col-form-label">Mã đại đội</label>
+                                <div class="col-sm-7">
+                                    <input asp-for="MaDaiDoi" class="form-control" name="maDD" />
+                                </div>
+                                <span asp-validation-for="MaDaiDoi" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="MaCanBoDaiDoi" class="col-sm-4 col-form-label">Cán bộ đại đội</label>
+                                <div class="col-sm-7">
+                                    <input asp-for="MaCanBoDaiDoi" class="form-control" name="cbDaiDoi" />
+                                </div>
+                                <span asp-validation-for="MaCanBoDaiDoi" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="ThoiGianDuKienMuon" class="col-sm-4 col-form-label">Thời gian dự kiến mượn</label>
+                                <div class="col-sm-7">
+                                    <input asp-for="ThoiGianDuKienMuon" class="form-control" name="tgMuon" />
+                                </div>
+                                <span asp-validation-for="ThoiGianDuKienMuon" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="ThoiGianDuKienTra" class="col-sm-4 col-form-label">Thời gian dự kiến trả</label>
+                                <div class="col-sm-7">
+                                    <input asp-for="ThoiGianDuKienTra" class="form-control" name="tgTra" />
+                                </div>
+                                <span asp-validation-for="ThoiGianDuKienTra" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="GhiChu" class="col-sm-4 col-form-label">Ghi chú</label>
+                                <div class="col-sm-7">
+                                    <input asp-for="GhiChu" class="form-control" name="ghichu" />
+                                </div>
+                                <span asp-validation-for="GhiChu" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3"></div>
+                                <input type="submit" value="Xác nhận" class="btn btn-primary col-sm-2" />
+                                <div class="col-sm-1"></div>
+                                <input type="reset" value="Hủy bỏ" class="btn btn-danger col-sm-2" />
+                            </div>
+                            <span class="text-danger">
+                                @ViewBag.Message
+                            </span>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Súng cần mượn</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label">Loại Súng</label>
+                            <div class="col-sm-4">
+                                <select name="MaLoaiSung" class="form-control">
+                                    <option value="" class="form-control"></option>
+                                    @foreach (var item in ViewBag.dsLoaiSung)
+                                    {
+                                        <option value="@item.MaLoaiSung" class="form-control">@item.TenLoaiSung</option>
+                                    }
+                                </select>
+                            </div>
+                            <label class="col-sm-2 col-form-label">Số lượng</label>
+                            <input type="number" class="col-sm-2 form-control" name="slLoaiSung" />
+                            <div class="col-sm-1"></div>
+                            <input type="button" value="Xóa" class="btn btn-danger col-1" />
+                        </div>
+                        <div id="dynamicSectionsContainer"></div>
+                        <div class="form-group row">
+                            <div class="col-sm-3"></div>
+                            <input type="button" value="Thêm tiếp" class="btn btn-success col-sm-2" id="addSectionButton" />
+                            <div class="col-sm-1"></div>
+                            <input type="submit" value="Xác nhận" class="btn btn-primary col-sm-2" />
+                            <div class="col-sm-1"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Trang bị cần mượn</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label">Trang bị</label>
+                            <div class="col-sm-4">
+                                <select name="MaTrangBi" class="form-control">
+                                    <option value="" class="form-control"></option>
+                                    @foreach (var item in ViewBag.dsTB)
+                                    {
+                                        <option value="@item.MaTrangBi" class="form-control">@item.TenTrangBi</option>
+                                    }
+                                </select>
+                            </div>
+                            <label class="col-sm-2 col-form-label">Số lượng</label>
+                            <input type="number" class="col-sm-2 form-control" name="slLoaiTrangBi" />
+                            <div class="col-sm-1"></div>
+                            <input type="button" value="Xóa" class="btn btn-danger col-1" />
+                        </div>
+                        <div id="addTB"></div>
+                        <div class="form-group row">
+                            <div class="col-sm-3"></div>
+                            <input type="button" value="Thêm tiếp" class="btn btn-success col-sm-2" id="addTbButton"/>
+                            <div class="col-sm-1"></div>
+                            <input type="submit" value="Xác nhận" class="btn btn-primary col-sm-2" />
+                            <div class="col-sm-1"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<div id="allDonDeNghi"></div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#allDonDeNghi').load('/DonDeNghi/DSDNDaiDoi');
+
+            $('#addSectionButton').click(function () {
+                addSection();
+            });
+
+            $('#addTbButton').click(function () {
+                addTBSection();
+            });
+        });
+        var sectionCounter = 0;
+        var maxSections = @ViewBag.dsLoaiSung.Count-1;
+        var dsLoaiSungOptions = JSON.parse('@Html.Raw(jsonDsLoaiSung)');
+        function addSection() {
+            if (sectionCounter < maxSections) {
+                sectionCounter++;
+
+                var html = '<div class="form-group row">';
+                html += '<label class="col-2 col-form-label">Loại Súng</label>';
+                html += '<div class="col-sm-4">';
+                html += '<select name="MaLoaiSung' + sectionCounter + '" class="form-control">';
+
+                // Add options to the select element
+                dsLoaiSungOptions.forEach(function (item) {
+                    html += '<option value="' + item.MaLoaiSung + '">' + item.TenLoaiSung + '</option>';
+                });
+
+                html += '</select>';
+                html += '</div>';
+                html += '<label class="col-sm-2 col-form-label">Số lượng</label>';
+                html += '<input type="number" class="col-sm-2 form-control" name="slLoaiSung' + sectionCounter + '" />';
+                html += '<div class="col-sm-1"></div>';
+                html += '<input type="button" value="Xóa" class="btn btn-danger col-1" />';
+                html += '</div>';
+
+                // Append the new HTML section to the container
+                $('#dynamicSectionsContainer').append(html);
+            }else{
+                $('#addSectionButton').hide();
+            }
+        }
+
+
+        var sectionCounterTB = 0;
+        var maxSectionsTB = @ViewBag.dsTB.Count-1;
+        var dsTBOptions = JSON.parse('@Html.Raw(jsonDsTB)');
+        function addTBSection() {
+            if (sectionCounterTB < maxSectionsTB) {
+                sectionCounterTB++;
+
+                var html = '<div class="form-group row">';
+                html += '<label class="col-2 col-form-label">Loại Súng</label>';
+                html += '<div class="col-sm-4">';
+                html += '<select name="MaTrangBi' + sectionCounter + '" class="form-control">';
+
+                // Add options to the select element
+                dsTBOptions.forEach(function (item) {
+                    html += '<option value="' + item.MaTrangBi + '">' + item.TenTrangBi + '</option>';
+                });
+
+                html += '</select>';
+                html += '</div>';
+                html += '<label class="col-sm-2 col-form-label">Số lượng</label>';
+                html += '<input type="number" class="col-sm-2 form-control" name="slTrangBi' + sectionCounterTB + '" />';
+                html += '<div class="col-sm-1"></div>';
+                html += '<input type="button" value="Xóa" class="btn btn-danger col-1" />';
+                html += '</div>';
+
+                // Append the new HTML section to the container
+                $('#addTB').append(html);
+            } else {
+                $('#addTbButton').hide();
+            }
+        }
+    </script>
+}
+
