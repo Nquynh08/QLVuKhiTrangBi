@@ -1,0 +1,57 @@
+﻿@model IEnumerable<QLVuKhiTrangBi.Models.Sung>
+@{
+    int count = 1;
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Danh sách súng</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Số hiệu súng</th>
+                                    <th>
+                                        Đơn vị tính
+                                    </th>
+                                    <th>Loại súng</th>
+                                    <th>Quyết định</th>
+                                    <th>Tình trạng</th>
+                                    <th>Ghi chú</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@(count++)</td>
+                                        <td>@item.SoHieuSung</td>
+                                        <td>
+                                            @item.DonViTinh
+                                        </td>
+                                        <td>@item.MaLoaiSung</td>
+                                        <td>@item.SoQd</td>
+                                        <td>@item.TinhTrang</td>
+                                        <td>@item.GhiChu</td>
+                                        <td>
+                                            <a asp-action="Edit" asp-route-id="@item.SoHieuSung">Edit</a> |
+                                            <a asp-action="Delete" asp-route-id="@item.SoHieuSung">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

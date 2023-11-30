@@ -1,0 +1,50 @@
+﻿@model IEnumerable<QLVuKhiTrangBi.Models.Bangiaokho>
+@{
+    int count = 1;
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Danh sách bàn giao kho</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="bgk" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Mã số bàn giao kho</th>
+                                    <th>
+                                        Thời gian
+                                    </th>
+                                    <th>Người bàn giao</th>
+                                    <th>Người nhận bàn giao</th>
+                                    <th>Trạng thái kho</th>
+                                    <th>Ghi chú</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@(count++)</td>
+                                        <td>@item.MaBanGiaoKho</td>
+                                        <td>@item.ThoiGian</td>
+                                        <td>@item.TenNguoiGiao</td>
+                                        <td>@item.TenNguoiNhan</td>
+                                        <td>@item.TinhTrangKho</td>
+                                        <td>@item.GhiChu</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,92 @@
+﻿@model QLVuKhiTrangBi.Models.TrangBi
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Cập nhật thông tin trang bị</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <form asp-action="Edit" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-3"></div>
+                                <label asp-for="TenTrangBi" class="col-sm-2 col-form-label">Tên trang bị</label>
+                                <div class="col-sm-4">
+                                    <input asp-for="TenTrangBi" class="form-control" name="tenTB" />
+                                </div>
+                                <span asp-validation-for="TenTrangBi" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3"></div>
+                                <label asp-for="DonViTinh" class="col-sm-2 col-form-label">Đơn vị tính</label>
+                                <div class="col-sm-4">
+                                    <input asp-for="DonViTinh" class="form-control" name="dvt" />
+                                </div>
+                                <span asp-validation-for="DonViTinh" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3"></div>
+                                <label asp-for="TinhTrang" class="col-sm-2 col-form-label">Tình trạng</label>
+                                <div class="col-sm-4">
+                                    <input asp-for="TinhTrang" class="form-control" name="tinhtrang" />
+                                </div>
+                                <span asp-validation-for="TinhTrang" class="text-danger"></span>
+                            </div>
+                      
+                            <div class="form-group row">
+                                <div class="col-sm-3"></div>
+                                <label asp-for="MaLoaiTb" class="col-sm-2 col-form-label">Loại trang bị</label>
+                                <div class="col-sm-4">
+                                    <select name="MaLoaiTb" class="form-control">
+                                        <option value="" class="form-control"></option>
+                                        @foreach (var item in ViewBag.dsLoaiTB)
+                                        {
+                                            <option value="@item.MaLoaiTb" class="form-control">@item.TenLoaiTb</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3"></div>
+                                <label asp-for="SoQd" class="col-sm-2 col-form-label">Số Quyết định</label>
+                                <div class="col-sm-4">
+                                    <select name="SoQd" class="form-control">
+                                        <option value="" class="form-control"></option>
+                                        @foreach (var item in ViewBag.dsQD)
+                                        {
+                                            <option value="@item.SoQd" class="form-control">@item.SoQd</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-4"></div>
+                                <input type="submit" value="Xác nhận" class="btn btn-primary col-sm-1" />
+                                <div class="col-sm-1"></div>
+                                <input type="reset" value="Hủy bỏ" class="btn btn-danger col-sm-1" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div id="allTB"></div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#allTB').load('/QLTrangBi/DSTB');
+        });
+    </script>
+}

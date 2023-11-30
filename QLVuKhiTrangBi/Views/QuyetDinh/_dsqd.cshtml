@@ -1,0 +1,49 @@
+﻿@model IEnumerable<QLVuKhiTrangBi.Models.QuyetDinh>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Danh sách quyết định</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Số quyết định</th>
+                                    <th>
+                                        Tên file
+                                    </th>
+                                    <th>Thời gian cập nhật</th>
+                                    <th>Người gửi</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.SoQd</td>
+                                        <td>
+                                            @item.ChiTiet
+                                        </td>
+                                        <td>@item.ThoiGian</td>
+                                        <td>@Html.DisplayFor(modelItem => item.NguoiGuiNavigation.HoTen)</td>
+                                        <td>
+                                            <a asp-action="Edit" asp-route-id="@item.SoQd">Edit</a> |
+                                            @*  <a asp-action="Details" asp-route-id="@item.SoQd">Details</a> |*@
+                                            <a asp-action="Delete" asp-route-id="@item.SoQd">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

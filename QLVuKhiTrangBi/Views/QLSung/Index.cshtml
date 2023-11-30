@@ -1,0 +1,106 @@
+﻿@model QLVuKhiTrangBi.Models.Sung
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Thêm mới súng</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <form asp-action="Index" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-3"></div>
+                                <label asp-for="SoHieuSung" class="col-sm-2 col-form-label">Số hiệu súng</label>
+                                <div class="col-sm-4">
+                                    <input asp-for="SoHieuSung" class="form-control" name="sosung"/>
+                                </div>
+                                <span asp-validation-for="SoHieuSung" class="text-danger"></span>
+                                @if (TempData["Message"] != null)
+                                {
+                                    <div class="alert alert-info">
+                                        @TempData["Message"]
+                                    </div>
+                                }
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3"></div>
+                                <label asp-for="DonViTinh" class="col-sm-2 col-form-label">Đơn vị tính</label>
+                                <div class="col-sm-4">
+                                    <input asp-for="DonViTinh" class="form-control" name="dvt"/>
+                                </div>
+                                <span asp-validation-for="DonViTinh" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3"></div>
+                                <label asp-for="TinhTrang" class="col-sm-2 col-form-label">Tình trạng</label>
+                                <div class="col-sm-4">
+                                    <input asp-for="TinhTrang" class="form-control" name="tinhtrang" />
+                                </div>
+                                <span asp-validation-for="TinhTrang" class="text-danger"></span>
+                            </div>
+                            @*<div class="form-group row">
+                                <label asp-for="GhiChu" class="col-sm-2 col-form-label">Ghi chú</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="GhiChu" class="form-control" />
+                                </div>
+                                <span asp-validation-for="GhiChu" class="text-danger"></span>
+                            </div>*@
+                            <div class="form-group row">
+                                <div class="col-sm-3"></div>
+                                <label asp-for="MaLoaiSung" class="col-sm-2 col-form-label">Loại súng</label>
+                                <div class="col-sm-4">
+                                    <select name="MaLoaiSung" class="form-control">
+                                        <option value="" class="form-control"></option>
+                                        @foreach (var item in ViewBag.dsLoaiSung)
+                                        {
+                                            <option value="@item.MaLoaiSung" class="form-control">@item.TenLoaiSung</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3"></div>
+                                <label asp-for="SoQd" class="col-sm-2 col-form-label">Số Quyết định</label>
+                                <div class="col-sm-4">
+                                    <select name="SoQd" class="form-control">
+                                        <option value="" class="form-control"></option>
+                                        @foreach (var item in ViewBag.dsQD)
+                                        {
+                                            <option value="@item.SoQd" class="form-control">@item.SoQd</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-4"></div>
+                                <input type="submit" value="Xác nhận" class="btn btn-primary col-sm-1" />
+                                <div class="col-sm-1"></div>
+                                <input type="reset" value="Hủy bỏ" class="btn btn-danger col-sm-1" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="allSung"></div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#allSung').load('/QLSung/DSSung');
+        });
+    </script>
+}

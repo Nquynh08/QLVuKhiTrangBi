@@ -1,0 +1,55 @@
+﻿@model IEnumerable<QLVuKhiTrangBi.Models.TrangBi>
+@{
+    int count = 1;
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Danh sách Trang bị</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Mã trang bị</th>
+                                    <th>
+                                        Tên trang bị
+                                    </th>
+                                    <th>Đơn vị tính</th>
+                                    <th>Số lượng</th>
+                                    <th>Ghi chú</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@(count++)</td>
+                                        <td>@item.MaTrangBi</td>
+                                        <td>
+                                            @item.TenTrangBi
+                                        </td>
+                                        <td>@item.DonViTinh</td>
+                                        <td>@item.SoLuong</td>
+                                        <td>@item.GhiChu</td>
+                                        <td>
+                                            <a asp-action="Edit" asp-route-id="@item.MaTrangBi">Edit</a> |
+                                            <a asp-action="Delete" asp-route-id="@item.MaTrangBi">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

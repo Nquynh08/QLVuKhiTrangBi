@@ -1,0 +1,75 @@
+﻿@model QLVuKhiTrangBi.Models.BbbanGiaoKho
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";   
+}
+<div style="margin:30px">
+    <h2>Cán bộ đang phụ trách kho: @ViewBag.tencbpt</h2>
+    <p>Thời gian bắt đầu phụ trách kho: @ViewBag.thoigianpt</p>
+</div>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Bàn giao kho</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <form asp-action="Index" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group row">
+                                <div class="col-sm-2"></div>
+                                <label asp-for="MaNguoiNhan" class="col-sm-2 col-form-label">Cán bộ nhận bàn giao kho</label>
+                                <div class="col-sm-3">
+                                    <select name="MaNguoiNhan" class="form-control">
+                                        <option value="" class="form-control"></option>
+                                        @foreach (var item in ViewBag.cbpt)
+                                        {
+                                            if (item.MaQn != ViewBag.macbpt)
+                                            {
+                                                <option value="@item.MaQn" class="form-control">@item.HoTen</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-2"></div>
+                                <label asp-for="TinhTrangKho" class="col-sm-2 col-form-label">Tình trạng kho</label>
+                                <div class="col-sm-3">
+                                    <input asp-for="TinhTrangKho" class="form-control" name="tinhtrangkho" />
+                                </div>
+                                <span asp-validation-for="TinhTrangKho" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-2"></div>
+                                <label asp-for="GhiChu" class="col-sm-2 col-form-label">Ghi chú</label>
+                                <div class="col-sm-3">
+                                    <input asp-for="GhiChu" class="form-control" name="ghichu" />
+                                </div>
+                                <span asp-validation-for="GhiChu" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6"></div>
+                                <input type="submit" value="Xác nhận" class="btn btn-primary col-sm-1" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</section>
+<div id="dsbgk"></div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#dsbgk').load('/BanGiaoKho/bbbgk');
+        });
+    </script>
+}

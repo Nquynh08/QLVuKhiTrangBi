@@ -1,0 +1,35 @@
+﻿@model QLVuKhiTrangBi.Models.LoaiTrangBi
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h4>Cập nhật thông tin</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="MaLoaiTb" />
+           
+            <div class="form-group">
+                <label asp-for="TenLoaiTb" class="control-label">Tên loại trang bị</label>
+                <input asp-for="TenLoaiTb" class="form-control" />
+                <span asp-validation-for="TenLoaiTb" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Xác nhận" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="allLoaiTB"></div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#allLoaiTB').load('/QLLoaiTrangBi/DSLoaiTB');
+        });
+    </script>
+}

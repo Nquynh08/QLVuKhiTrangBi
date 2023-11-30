@@ -1,0 +1,49 @@
+﻿@model IEnumerable<QLVuKhiTrangBi.Models.LoaiSung>
+@{
+    int count = 1;
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Danh sách loại súng</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Mã loại súng</th>
+                                    <th>
+                                        Tên loại súng
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@(count++)</td>
+                                        <td>@item.MaLoaiSung</td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TenLoaiSung)
+                                        </td>
+                                        <td>
+                                            <a asp-action="Edit" asp-route-id="@item.MaLoaiSung">Edit</a> |
+                                            <a asp-action="Delete" asp-route-id="@item.MaLoaiSung">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
