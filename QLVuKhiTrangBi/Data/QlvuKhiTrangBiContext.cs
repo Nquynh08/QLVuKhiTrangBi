@@ -468,9 +468,7 @@ public partial class QlvuKhiTrangBiContext : DbContext
 
             entity.ToTable("YEUCAUMUONVKTB");
 
-            entity.Property(e => e.MaYc)
-                .ValueGeneratedNever()
-                .HasColumnName("MaYC");
+            entity.Property(e => e.MaYc).HasColumnName("MaYC");
             entity.Property(e => e.GhiChu).HasColumnType("ntext");
             entity.Property(e => e.MaCanBoDaiDoi)
                 .HasMaxLength(10)

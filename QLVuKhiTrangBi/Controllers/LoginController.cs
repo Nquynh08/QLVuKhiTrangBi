@@ -30,10 +30,16 @@ namespace QLVuKhiTrangBi.Controllers
             {
                 HttpContext.Session.SetString("IsLoggedIn", "true");
                 HttpContext.Session.SetString("UserName", userName);
+                var canbo = (
+                  from t in db.TaiKhoans
+                  join c in db.CanBoDaiDois on t.MaQn equals c.MaQn
+                  where t.TenDn == userName
+                  select c.HoTen
+                  ).FirstOrDefault();
 
                 var claims = new List<Claim>
                 {
-                   new Claim(ClaimTypes.Name, tk.TenDn),
+                   new Claim(ClaimTypes.Name, canbo),
                 };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
