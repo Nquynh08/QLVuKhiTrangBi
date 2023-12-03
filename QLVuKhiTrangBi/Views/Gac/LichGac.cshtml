@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "LichGac";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    int count = 1;
 }
 
 <section class="content">
@@ -35,7 +34,7 @@
                                     foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td>@(count++)</td>
+                                            <td>@item.Stt</td>
                                             <td>@item.Ngay.ToString(string.Format("dd/MM/yyyy"))</td>
                                             <td>@item.DaiDoiGac</td>
                                             <td>@item.ThoiGianBatDau</td>
@@ -43,13 +42,17 @@
                                             <td>@item.TrangThai</td>
                                             <td>@item.GhiChu</td>
                                             <td>
+                                                @if(item.Ngay < DateTime.Today)
+                                                {
+                                                    <a asp-action="ChiTiet" asp-route-id="@item.Stt">Chi tiết bàn giao</a>
+                                                }
                                                 @if (item.TrangThai == null && item.Ngay == DateTime.Today)
                                                 {
-                                                    <a asp-action="Muon" asp-route-id="@item.Ngay">Mượn VKTB</a>
+                                                    <a asp-action="Muon" asp-route-id="@item.Stt">Mượn VKTB</a>
                                                 }
                                                 @if (item.TrangThai == "Đang gác")
                                                 {
-                                                    <a asp-action="Tra" asp-route-id="@item.Ngay">Trả VKTB</a>
+                                                    <a asp-action="Tra" asp-route-id="@item.Stt" >Trả VKTB</a>
                                                 }
                                             </td>
                                         </tr>
@@ -63,4 +66,16 @@
         </div>
     </div>
 </section>
+
+@section scripts{
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            // Lắng nghe sự kiện click trên nút "Trả VKTB"
+            document.getElementById('btnTra').addEventListener('click', function () {
+                // Hiển thị phần có id="BBTra"
+                document.getElementById('BBTra').classList.remove('d-none');
+            });
+        });
+    </script>
+}
 

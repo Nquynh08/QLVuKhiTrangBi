@@ -5,6 +5,8 @@ namespace QLVuKhiTrangBi.Models;
 
 public partial class LichGac
 {
+    public int Stt { get; set; }
+
     public DateTime Ngay { get; set; }
 
     public string? DaiDoiGac { get; set; }

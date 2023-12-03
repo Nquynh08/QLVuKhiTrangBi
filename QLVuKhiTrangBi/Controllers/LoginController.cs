@@ -34,6 +34,7 @@ namespace QLVuKhiTrangBi.Controllers
                 var claims = new List<Claim>
                 {
                    new Claim(ClaimTypes.Name, tk.HoTen),
+                   new Claim(ClaimTypes.Sid, tk.MaQn),
                 };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

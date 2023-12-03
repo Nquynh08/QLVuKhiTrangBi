@@ -5,9 +5,11 @@ namespace QLVuKhiTrangBi.Models;
 
 public partial class BbmuonTraSung
 {
-    public string MaBienBan { get; set; } = null!;
+    public int MaBienBan { get; set; }
 
     public string SoHieuSung { get; set; } = null!;
+
+    public int MuonTra { get; set; }
 
     public string? TinhTrang { get; set; }
 

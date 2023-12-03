@@ -5,17 +5,23 @@ namespace QLVuKhiTrangBi.Models;
 
 public partial class BbmuonTraVktb
 {
-    public string MaBienBan { get; set; } = null!;
+    public int MaBienBan { get; set; }
 
     public string? TenBienBan { get; set; }
 
-    public string? CanBoKho { get; set; }
+    public DateTime? NgayGac { get; set; }
 
-    public string? CanBoDaiDoi { get; set; }
+    public string? CbkhoGiao { get; set; }
 
-    public DateTime? ThoiGianMuon { get; set; }
+    public string? CbdaidoiNhan { get; set; }
 
-    public DateTime? ThoiGianTra { get; set; }
+    public string? ThoiGianMuon { get; set; }
+
+    public string? CbdaidoiGiao { get; set; }
+
+    public string? CbkhoNhan { get; set; }
+
+    public string? ThoiGianTra { get; set; }
 
     public string? GhiChu { get; set; }
 

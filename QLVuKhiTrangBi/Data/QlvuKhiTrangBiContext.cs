@@ -24,6 +24,8 @@ public partial class QlvuKhiTrangBiContext : DbContext
 
     public virtual DbSet<BbbanGiaoQk> BbbanGiaoQks { get; set; }
 
+    public virtual DbSet<Bbmuon> Bbmuons { get; set; }
+
     public virtual DbSet<BbmuonTraSung> BbmuonTraSungs { get; set; }
 
     public virtual DbSet<BbmuonTraTb> BbmuonTraTbs { get; set; }
@@ -171,15 +173,33 @@ public partial class QlvuKhiTrangBiContext : DbContext
                 .HasConstraintName("FK_BBBanGiaoQK_CanBoPhuTrach");
         });
 
-        modelBuilder.Entity<BbmuonTraSung>(entity =>
+        modelBuilder.Entity<Bbmuon>(entity =>
         {
-            entity.HasKey(e => new { e.MaBienBan, e.SoHieuSung });
+            entity.HasKey(e => e.MaBienBan);
 
-            entity.ToTable("BBMuonTraSung");
+            entity.ToTable("BBMuon");
 
             entity.Property(e => e.MaBienBan)
                 .HasMaxLength(10)
                 .IsFixedLength();
+            entity.Property(e => e.CanBoDaiDoi)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.CanBoKho)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.GhiChu).HasColumnType("ntext");
+            entity.Property(e => e.Ngay).HasColumnType("date");
+            entity.Property(e => e.TenBienBan).HasMaxLength(100);
+            entity.Property(e => e.ThoiGianMuon).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<BbmuonTraSung>(entity =>
+        {
+            entity.HasKey(e => new { e.MaBienBan, e.SoHieuSung, e.MuonTra });
+
+            entity.ToTable("BBMuonTraSung");
+
             entity.Property(e => e.SoHieuSung)
                 .HasMaxLength(10)
                 .IsFixedLength();
@@ -194,19 +214,17 @@ public partial class QlvuKhiTrangBiContext : DbContext
 
         modelBuilder.Entity<BbmuonTraTb>(entity =>
         {
-            entity.HasKey(e => new { e.MaBienBan, e.MaTrangBi });
+            entity.HasKey(e => new { e.MaBienBan, e.MaTrangBi, e.MuonTra });
 
             entity.ToTable("BBMuonTraTB");
 
-            entity.Property(e => e.MaBienBan)
-                .HasMaxLength(10)
-                .IsFixedLength();
             entity.Property(e => e.MaTrangBi)
                 .HasMaxLength(10)
                 .IsFixedLength();
             entity.Property(e => e.GhiChu)
                 .HasMaxLength(10)
                 .IsFixedLength();
+            entity.Property(e => e.Slthieu).HasColumnName("SLThieu");
             entity.Property(e => e.TinhTrang).HasMaxLength(100);
 
             entity.HasOne(d => d.MaBienBanNavigation).WithMany(p => p.BbmuonTraTbs)
@@ -221,21 +239,35 @@ public partial class QlvuKhiTrangBiContext : DbContext
 
             entity.ToTable("BBMuonTraVKTB");
 
-            entity.Property(e => e.MaBienBan)
+            entity.Property(e => e.CbdaidoiGiao)
                 .HasMaxLength(10)
-                .IsFixedLength();
-            entity.Property(e => e.CanBoDaiDoi)
+                .IsFixedLength()
+                .HasColumnName("cbdaidoiGiao");
+            entity.Property(e => e.CbdaidoiNhan)
                 .HasMaxLength(10)
-                .IsFixedLength();
-            entity.Property(e => e.CanBoKho)
+                .IsFixedLength()
+                .HasColumnName("cbdaidoiNhan");
+            entity.Property(e => e.CbkhoGiao)
                 .HasMaxLength(10)
-                .IsFixedLength();
+                .IsFixedLength()
+                .HasColumnName("cbkhoGiao");
+            entity.Property(e => e.CbkhoNhan)
+                .HasMaxLength(10)
+                .IsFixedLength()
+                .HasColumnName("cbkhoNhan");
             entity.Property(e => e.GhiChu)
                 .HasMaxLength(10)
                 .IsFixedLength();
+            entity.Property(e => e.NgayGac).HasColumnType("date");
             entity.Property(e => e.TenBienBan).HasMaxLength(100);
-            entity.Property(e => e.ThoiGianMuon).HasColumnType("datetime");
-            entity.Property(e => e.ThoiGianTra).HasColumnType("datetime");
+            entity.Property(e => e.ThoiGianMuon)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .IsFixedLength();
+            entity.Property(e => e.ThoiGianTra)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .IsFixedLength();
         });
 
         modelBuilder.Entity<CanBoDaiDoi>(entity =>
@@ -316,15 +348,18 @@ public partial class QlvuKhiTrangBiContext : DbContext
 
         modelBuilder.Entity<LichGac>(entity =>
         {
-            entity.HasKey(e => e.Ngay);
+            entity.HasKey(e => e.Stt).HasName("PK_LichGac_1");
 
             entity.ToTable("LichGac");
 
-            entity.Property(e => e.Ngay).HasColumnType("date");
+            entity.Property(e => e.Stt)
+                .ValueGeneratedNever()
+                .HasColumnName("STT");
             entity.Property(e => e.DaiDoiGac)
                 .HasMaxLength(10)
                 .IsFixedLength();
             entity.Property(e => e.GhiChu).HasColumnType("ntext");
+            entity.Property(e => e.Ngay).HasColumnType("date");
             entity.Property(e => e.TrangThai).HasMaxLength(50);
         });
 
