@@ -1,0 +1,66 @@
+﻿@model IEnumerable<QLVuKhiTrangBi.Models.LichGac>
+
+@{
+    ViewData["Title"] = "LichGac";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int count = 1;
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Lịch gác tháng 12 năm 2023</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Ngày gác</th>
+                                    <th>Đại đội gác</th>
+                                    <th>Thời gian bắt đầu</th>
+                                    <th>Thời gian kết thúc</th>
+                                    <th>Trạng thái</th>
+                                    <th>Ghi chú</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@(count++)</td>
+                                            <td>@item.Ngay.ToString(string.Format("dd/MM/yyyy"))</td>
+                                            <td>@item.DaiDoiGac</td>
+                                            <td>@item.ThoiGianBatDau</td>
+                                            <td>@item.ThoiGianKetThuc</td>
+                                            <td>@item.TrangThai</td>
+                                            <td>@item.GhiChu</td>
+                                            <td>
+                                                @if (item.TrangThai == null && item.Ngay == DateTime.Today)
+                                                {
+                                                    <a asp-action="Muon" asp-route-id="@item.Ngay">Mượn VKTB</a>
+                                                }
+                                                @if (item.TrangThai == "Đang gác")
+                                                {
+                                                    <a asp-action="Tra" asp-route-id="@item.Ngay">Trả VKTB</a>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

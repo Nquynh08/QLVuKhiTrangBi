@@ -38,12 +38,12 @@ namespace QLVuKhiTrangBi.Controllers
 
             var tenDn = HttpContext.Session.GetString("UserName");
             var canbo = (
-           from tk in db.TaiKhoans
-           join c in db.CanBoDaiDois on tk.MaQn equals c.MaQn
-           where tk.TenDn == tenDn
-           select c.HoTen
-           ).FirstOrDefault();
-            ViewBag.canbo = canbo;
+               from tk in db.TaiKhoans
+               join c in db.CanBoDaiDois on tk.MaQn equals c.MaQn
+               where tk.TenDn == tenDn
+               select c.HoTen
+               ).FirstOrDefault();
+             ViewBag.canbo = canbo;
 
             var daidoi = (
             from tk in db.TaiKhoans
@@ -58,10 +58,12 @@ namespace QLVuKhiTrangBi.Controllers
         [HttpPost]
         public IActionResult Create(Yeucaumuonvktb model, List<string> MaLoaiSung, List<int> slLoaiSung, List<string> MaTrangBi, List<int> slTrangBi)
         {
+
+            var tenDn = HttpContext.Session.GetString("UserName");
             var yeuCauMuon = new Yeucaumuonvktb
             {
                 MaDaiDoi = model.MaDaiDoi,
-                MaCanBoDaiDoi = model.MaCanBoDaiDoi,
+                MaCanBoDaiDoi = tenDn,
                 ThoiGianDuKienMuon = model.ThoiGianDuKienMuon,
                 ThoiGianDuKienTra = model.ThoiGianDuKienTra,
                 TrangThai = "Chờ xác nhận",

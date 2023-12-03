@@ -7,6 +7,8 @@ public partial class TaiKhoan
 {
     public string MaQn { get; set; } = null!;
 
+    public string? HoTen { get; set; }
+
     public string? TenDn { get; set; }
 
     public string? MatKhau { get; set; }
