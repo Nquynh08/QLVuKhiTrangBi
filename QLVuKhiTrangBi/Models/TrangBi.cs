@@ -23,6 +23,8 @@ public partial class TrangBi
 
     public virtual ICollection<BanGiaoQkTrangBi> BanGiaoQkTrangBis { get; set; } = new List<BanGiaoQkTrangBi>();
 
+    public virtual ICollection<BienCheTb> BienCheTbs { get; set; } = new List<BienCheTb>();
+
     public virtual LoaiTrangBi? MaLoaiTbNavigation { get; set; }
 
     public virtual QuyetDinh? SoQdNavigation { get; set; }

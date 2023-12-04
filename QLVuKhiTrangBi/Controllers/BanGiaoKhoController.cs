@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using QLVuKhiTrangBi.Data;
 using QLVuKhiTrangBi.Models;
 
 namespace QLVuKhiTrangBi.Controllers
 {
+    [Authorize]
     public class BanGiaoKhoController : Controller
     {
         QlvuKhiTrangBiContext db = new QlvuKhiTrangBiContext();

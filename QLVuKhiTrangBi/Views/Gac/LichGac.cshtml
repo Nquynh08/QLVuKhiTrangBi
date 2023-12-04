@@ -42,7 +42,7 @@
                                             <td>@item.TrangThai</td>
                                             <td>@item.GhiChu</td>
                                             <td>
-                                                @if(item.Ngay < DateTime.Today)
+                                                @if(item.Ngay < DateTime.Today || item.TrangThai == "Đã hoàn thành")
                                                 {
                                                     <a asp-action="ChiTiet" asp-route-id="@item.Stt">Chi tiết bàn giao</a>
                                                 }

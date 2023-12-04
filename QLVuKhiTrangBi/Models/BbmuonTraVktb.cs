@@ -11,6 +11,8 @@ public partial class BbmuonTraVktb
 
     public DateTime? NgayGac { get; set; }
 
+    public string? DaiDoiGac { get; set; }
+
     public string? CbkhoGiao { get; set; }
 
     public string? CbdaidoiNhan { get; set; }

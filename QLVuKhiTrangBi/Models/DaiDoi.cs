@@ -10,4 +10,6 @@ public partial class DaiDoi
     public string? TenDaiDoi { get; set; }
 
     public virtual ICollection<CanBoDaiDoi> CanBoDaiDois { get; set; } = new List<CanBoDaiDoi>();
+
+    public virtual ICollection<HocVien> HocViens { get; set; } = new List<HocVien>();
 }

@@ -24,13 +24,15 @@ public partial class QlvuKhiTrangBiContext : DbContext
 
     public virtual DbSet<BbbanGiaoQk> BbbanGiaoQks { get; set; }
 
-    public virtual DbSet<Bbmuon> Bbmuons { get; set; }
-
     public virtual DbSet<BbmuonTraSung> BbmuonTraSungs { get; set; }
 
     public virtual DbSet<BbmuonTraTb> BbmuonTraTbs { get; set; }
 
     public virtual DbSet<BbmuonTraVktb> BbmuonTraVktbs { get; set; }
+
+    public virtual DbSet<BienCheSung> BienCheSungs { get; set; }
+
+    public virtual DbSet<BienCheTb> BienCheTbs { get; set; }
 
     public virtual DbSet<CanBoDaiDoi> CanBoDaiDois { get; set; }
 
@@ -40,11 +42,15 @@ public partial class QlvuKhiTrangBiContext : DbContext
 
     public virtual DbSet<DaiDoi> DaiDois { get; set; }
 
+    public virtual DbSet<HocVien> HocViens { get; set; }
+
     public virtual DbSet<LichGac> LichGacs { get; set; }
 
     public virtual DbSet<LoaiSung> LoaiSungs { get; set; }
 
     public virtual DbSet<LoaiTrangBi> LoaiTrangBis { get; set; }
+
+    public virtual DbSet<LuotBienChe> LuotBienChes { get; set; }
 
     public virtual DbSet<NhomNguoiDung> NhomNguoiDungs { get; set; }
 
@@ -173,27 +179,6 @@ public partial class QlvuKhiTrangBiContext : DbContext
                 .HasConstraintName("FK_BBBanGiaoQK_CanBoPhuTrach");
         });
 
-        modelBuilder.Entity<Bbmuon>(entity =>
-        {
-            entity.HasKey(e => e.MaBienBan);
-
-            entity.ToTable("BBMuon");
-
-            entity.Property(e => e.MaBienBan)
-                .HasMaxLength(10)
-                .IsFixedLength();
-            entity.Property(e => e.CanBoDaiDoi)
-                .HasMaxLength(10)
-                .IsFixedLength();
-            entity.Property(e => e.CanBoKho)
-                .HasMaxLength(10)
-                .IsFixedLength();
-            entity.Property(e => e.GhiChu).HasColumnType("ntext");
-            entity.Property(e => e.Ngay).HasColumnType("date");
-            entity.Property(e => e.TenBienBan).HasMaxLength(100);
-            entity.Property(e => e.ThoiGianMuon).HasColumnType("datetime");
-        });
-
         modelBuilder.Entity<BbmuonTraSung>(entity =>
         {
             entity.HasKey(e => new { e.MaBienBan, e.SoHieuSung, e.MuonTra });
@@ -248,13 +233,14 @@ public partial class QlvuKhiTrangBiContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("cbdaidoiNhan");
             entity.Property(e => e.CbkhoGiao)
-                .HasMaxLength(10)
-                .IsFixedLength()
+                .HasMaxLength(50)
                 .HasColumnName("cbkhoGiao");
             entity.Property(e => e.CbkhoNhan)
-                .HasMaxLength(10)
-                .IsFixedLength()
+                .HasMaxLength(50)
                 .HasColumnName("cbkhoNhan");
+            entity.Property(e => e.DaiDoiGac)
+                .HasMaxLength(5)
+                .IsFixedLength();
             entity.Property(e => e.GhiChu)
                 .HasMaxLength(10)
                 .IsFixedLength();
@@ -268,6 +254,73 @@ public partial class QlvuKhiTrangBiContext : DbContext
                 .HasMaxLength(10)
                 .IsUnicode(false)
                 .IsFixedLength();
+        });
+
+        modelBuilder.Entity<BienCheSung>(entity =>
+        {
+            entity.HasKey(e => e.MaBienCheSung).HasName("PK__BienCheS__C8A8A447F592EE45");
+
+            entity.ToTable("BienCheSung");
+
+            entity.Property(e => e.MaBienCheSung)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.GhiChu).HasMaxLength(100);
+            entity.Property(e => e.MaHocVien)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.MaLuotBienChe)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.SoHieuSung)
+                .HasMaxLength(10)
+                .IsFixedLength();
+
+            entity.HasOne(d => d.MaHocVienNavigation).WithMany(p => p.BienCheSungs)
+                .HasForeignKey(d => d.MaHocVien)
+                .HasConstraintName("FK__BienCheSu__MaHoc__5224328E");
+
+            entity.HasOne(d => d.MaLuotBienCheNavigation).WithMany(p => p.BienCheSungs)
+                .HasForeignKey(d => d.MaLuotBienChe)
+                .HasConstraintName("FK__BienCheSu__MaLuo__531856C7");
+
+            entity.HasOne(d => d.SoHieuSungNavigation).WithMany(p => p.BienCheSungs)
+                .HasForeignKey(d => d.SoHieuSung)
+                .HasConstraintName("FK__BienCheSu__SoHie__51300E55");
+        });
+
+        modelBuilder.Entity<BienCheTb>(entity =>
+        {
+            entity.HasKey(e => e.MaBienCheTb).HasName("PK__BienCheT__B56E0D9712FC23FB");
+
+            entity.ToTable("BienCheTB");
+
+            entity.Property(e => e.MaBienCheTb)
+                .HasMaxLength(10)
+                .IsFixedLength()
+                .HasColumnName("MaBienCheTB");
+            entity.Property(e => e.GhiChu).HasMaxLength(100);
+            entity.Property(e => e.MaHocVien)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.MaLuotBienChe)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.MaTrangBi)
+                .HasMaxLength(10)
+                .IsFixedLength();
+
+            entity.HasOne(d => d.MaHocVienNavigation).WithMany(p => p.BienCheTbs)
+                .HasForeignKey(d => d.MaHocVien)
+                .HasConstraintName("FK__BienCheTB__MaHoc__540C7B00");
+
+            entity.HasOne(d => d.MaLuotBienCheNavigation).WithMany(p => p.BienCheTbs)
+                .HasForeignKey(d => d.MaLuotBienChe)
+                .HasConstraintName("FK__BienCheTB__MaLuo__55009F39");
+
+            entity.HasOne(d => d.MaTrangBiNavigation).WithMany(p => p.BienCheTbs)
+                .HasForeignKey(d => d.MaTrangBi)
+                .HasConstraintName("FK__BienCheTB__MaTra__55F4C372");
         });
 
         modelBuilder.Entity<CanBoDaiDoi>(entity =>
@@ -346,6 +399,25 @@ public partial class QlvuKhiTrangBiContext : DbContext
             entity.Property(e => e.TenDaiDoi).HasMaxLength(50);
         });
 
+        modelBuilder.Entity<HocVien>(entity =>
+        {
+            entity.HasKey(e => e.MaHocVien).HasName("PK__HocVien__685B0E6A4A7757D3");
+
+            entity.ToTable("HocVien");
+
+            entity.Property(e => e.MaHocVien)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.MaDaiDoi)
+                .HasMaxLength(5)
+                .IsFixedLength();
+            entity.Property(e => e.TenHocVien).HasMaxLength(50);
+
+            entity.HasOne(d => d.MaDaiDoiNavigation).WithMany(p => p.HocViens)
+                .HasForeignKey(d => d.MaDaiDoi)
+                .HasConstraintName("FK__HocVien__MaDaiDo__56E8E7AB");
+        });
+
         modelBuilder.Entity<LichGac>(entity =>
         {
             entity.HasKey(e => e.Stt).HasName("PK_LichGac_1");
@@ -388,6 +460,24 @@ public partial class QlvuKhiTrangBiContext : DbContext
             entity.Property(e => e.TenLoaiTb)
                 .HasMaxLength(50)
                 .HasColumnName("TenLoaiTB");
+        });
+
+        modelBuilder.Entity<LuotBienChe>(entity =>
+        {
+            entity.HasKey(e => e.MaLuotBienChe).HasName("PK__LuotBien__187D56202FF722A5");
+
+            entity.ToTable("LuotBienChe");
+
+            entity.Property(e => e.MaLuotBienChe)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.GhiChu).HasMaxLength(100);
+            entity.Property(e => e.ThoiGianBd)
+                .HasColumnType("date")
+                .HasColumnName("ThoiGianBD");
+            entity.Property(e => e.ThoiGianKt)
+                .HasColumnType("date")
+                .HasColumnName("ThoiGianKT");
         });
 
         modelBuilder.Entity<NhomNguoiDung>(entity =>

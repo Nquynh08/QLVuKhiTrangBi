@@ -19,6 +19,8 @@ public partial class Sung
 
     public virtual ICollection<BanGiaoQkSung> BanGiaoQkSungs { get; set; } = new List<BanGiaoQkSung>();
 
+    public virtual ICollection<BienCheSung> BienCheSungs { get; set; } = new List<BienCheSung>();
+
     public virtual LoaiSung? MaLoaiSungNavigation { get; set; }
 
     public virtual QuyetDinh? SoQdNavigation { get; set; }
