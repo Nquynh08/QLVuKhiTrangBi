@@ -5,7 +5,7 @@ using QLVuKhiTrangBi.Data;
 
 namespace QLVuKhiTrangBi.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "RequireTroLy")]
     public class BanGiaoQuanKhiController : Controller
     {
         QlvuKhiTrangBiContext db = new QlvuKhiTrangBiContext();

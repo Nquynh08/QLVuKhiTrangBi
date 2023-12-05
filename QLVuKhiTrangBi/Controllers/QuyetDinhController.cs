@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace QLVuKhiTrangBi.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "RequireTieuDoan")]
     public class QuyetDinhController : Controller
     {
         QlvuKhiTrangBiContext db = new QlvuKhiTrangBiContext();

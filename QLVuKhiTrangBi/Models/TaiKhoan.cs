@@ -13,5 +13,5 @@ public partial class TaiKhoan
 
     public string? MatKhau { get; set; }
 
-    public string? MaNhom { get; set; }
+    public string Role { get; set; } = null!;
 }

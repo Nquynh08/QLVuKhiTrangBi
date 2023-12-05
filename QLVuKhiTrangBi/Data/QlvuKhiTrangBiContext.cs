@@ -225,12 +225,10 @@ public partial class QlvuKhiTrangBiContext : DbContext
             entity.ToTable("BBMuonTraVKTB");
 
             entity.Property(e => e.CbdaidoiGiao)
-                .HasMaxLength(10)
-                .IsFixedLength()
+                .HasMaxLength(50)
                 .HasColumnName("cbdaidoiGiao");
             entity.Property(e => e.CbdaidoiNhan)
-                .HasMaxLength(10)
-                .IsFixedLength()
+                .HasMaxLength(50)
                 .HasColumnName("cbdaidoiNhan");
             entity.Property(e => e.CbkhoGiao)
                 .HasMaxLength(50)
@@ -593,12 +591,12 @@ public partial class QlvuKhiTrangBiContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("MaQN");
             entity.Property(e => e.HoTen).HasMaxLength(50);
-            entity.Property(e => e.MaNhom)
-                .HasMaxLength(10)
-                .IsFixedLength();
             entity.Property(e => e.MatKhau)
                 .HasMaxLength(20)
                 .IsFixedLength();
+            entity.Property(e => e.Role)
+                .HasMaxLength(10)
+                .IsUnicode(false);
             entity.Property(e => e.TenDn)
                 .HasMaxLength(10)
                 .IsFixedLength()

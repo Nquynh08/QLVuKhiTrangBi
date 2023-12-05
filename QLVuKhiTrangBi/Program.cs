@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using QLVuKhiTrangBi.Data;
 using QLVuKhiTrangBi.Services;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,13 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
             options.LoginPath = "/Login/Index";
             options.LogoutPath = "/Login/Logout";
         });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireTieuDoan", builder => builder.RequireRole("tieudoan"));
+    options.AddPolicy("RequireDaiDoi", builder => builder.RequireRole("daidoi"));
+    options.AddPolicy("RequireTroLy", builder => builder.RequireRole("troly"));
+});
 
 
 var app = builder.Build();

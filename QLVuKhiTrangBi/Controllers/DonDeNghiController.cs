@@ -6,7 +6,7 @@ using QLVuKhiTrangBi.Models;
 
 namespace QLVuKhiTrangBi.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "RequireDaiDoi")]
     public class DonDeNghiController : Controller
     {
         QlvuKhiTrangBiContext db = new QlvuKhiTrangBiContext();

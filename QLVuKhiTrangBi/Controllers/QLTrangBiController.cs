@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 
 namespace QLVuKhiTrangBi.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "RequireTroLy")]
     public class QLTrangBiController : Controller
     {
         QlvuKhiTrangBiContext db = new QlvuKhiTrangBiContext();

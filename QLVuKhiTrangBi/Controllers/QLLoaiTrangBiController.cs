@@ -6,7 +6,7 @@ using QLVuKhiTrangBi.Models;
 
 namespace QLVuKhiTrangBi.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "RequireTroLy")]
     public class QLLoaiTrangBiController : Controller
     {
         QlvuKhiTrangBiContext db = new QlvuKhiTrangBiContext(); 

@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 
 namespace QLVuKhiTrangBi.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "RequireTroLy")]
     public class GacController : Controller
     {
         QlvuKhiTrangBiContext db = new QlvuKhiTrangBiContext();

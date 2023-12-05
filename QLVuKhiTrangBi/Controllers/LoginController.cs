@@ -31,11 +31,14 @@ namespace QLVuKhiTrangBi.Controllers
                 HttpContext.Session.SetString("IsLoggedIn", "true");
                 HttpContext.Session.SetString("UserName", userName);
 
+                var role = tk.Role.Trim();
+
                 var claims = new List<Claim>
                 {
-                   new Claim(ClaimTypes.Name, tk.HoTen),
-                   new Claim(ClaimTypes.Sid, tk.MaQn),
+                    new Claim(ClaimTypes.Name, tk.HoTen),
+                    new Claim(ClaimTypes.Role, role), 
                 };
+
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -69,12 +72,12 @@ namespace QLVuKhiTrangBi.Controllers
             HttpContext.Session.Remove("UserName");
 
             HttpContext.User = new ClaimsPrincipal(new ClaimsIdentity());
-            
+
             HttpContext.Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
             HttpContext.Response.Headers["Pragma"] = "no-cache";
             HttpContext.Response.Headers["Expires"] = "0";
 
-            return RedirectToAction("Index", "Login"); 
+            return RedirectToAction("Index", "Login");
         }
     }
 }

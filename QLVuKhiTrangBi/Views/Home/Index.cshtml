@@ -7,3 +7,23 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+@{
+    var isTieuDoan = User.IsInRole("tieudoan");
+    var isDaiDoi = User.IsInRole("daidoi");
+    var isTroLy = User.IsInRole("troly");
+}
+
+@if (isTieuDoan)
+{
+    <p>This content is accessible to users in the "tieudoan" group.</p>
+}
+
+@if (isDaiDoi)
+{
+    <p>This content is accessible to users in the "daidoi" group.</p>
+}
+
+@if (isTroLy)
+{
+    <p>This content is accessible to users in the "troly" group.</p>
+}
