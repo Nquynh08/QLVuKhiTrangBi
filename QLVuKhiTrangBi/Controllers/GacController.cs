@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using QLVuKhiTrangBi.Data;
 using QLVuKhiTrangBi.Models;
 using System.Collections.Immutable;
@@ -154,6 +155,9 @@ namespace QLVuKhiTrangBi.Controllers
             DateTime ngay = ngayGac.Ngay;
             ViewBag.ngay = ngay;
 
+            DateTime ngay1 = ngay.AddDays(1);
+            ViewBag.ngay1 = ngay1;
+
             var daidoi = ngayGac.DaiDoiGac;
             ViewBag.PhanDoiGac = daidoi;
 
@@ -162,10 +166,11 @@ namespace QLVuKhiTrangBi.Controllers
             .Where(b => b.TenBienBan == ten && b.NgayGac == ngay)
             .SingleOrDefault();
 
+            ViewBag.bienbangac = bienbangac;
             ViewBag.bbSung = db.BbmuonTraSungs.Where(b => b.MaBienBan == bienbangac.MaBienBan).ToList();
             ViewBag.bbTB = db.BbmuonTraTbs.Where(b => b.MaBienBan == bienbangac.MaBienBan).ToList();
 
-            return View(bienbangac);
+            return View();
         }
     }
 }

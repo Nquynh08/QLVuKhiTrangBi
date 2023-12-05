@@ -1,13 +1,17 @@
 ﻿@{
     ViewData["Title"] = "ChiTiet";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var bienbangac = ViewBag.bienbangac;
+    var bbSung = ViewBag.bbSung;
+    var bbTB = ViewBag.bbTB;
 }
-<!-- Main content -->
+
+
 <section class="content">
-    <div class="row">
-        <div class="col-12" id="accordion">
-            <div class="card card-primary card-outline">
-                <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
                     <div class="card-header">
                         <h2 class="card-title w-100">
                             <b>Bàn giao Vũ khí, trang bị, vật chất canh gác</b>
@@ -17,88 +21,157 @@
                             <div class="col-6"></div>
                             <span style="color:black; " class="col-3"><b>Phân đội canh gác: @ViewBag.PhanDoiGac</b></span>
                         </div>
-
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Mượn vũ khí, trang bị, vật chất canh gác</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="example2" class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Số súng</th>
-                                    <th>Bao xe</th>
-                                    <th>Áo mưa</th>
-                                    <th>Xà cột, NKCG</th>
-                                    <th colspan="2">Xuất kho (..giờ...ngày..tháng...năm)</th>
-                                   @* <th>Người nhận cH/c  ... Người giao</th>
-                                    <th>Nhập kho (..giờ...ngày..tháng...năm)</th>
-                                    <th>Người giao cH/c  ... Người nhận</th>
-                                    <th>Ghi chú</th>*@
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>s</td>
-                                    <td>bc</td>
-                                    <td>am</td>
-                                    <td>xc</td>
-                                    <td>
-                                        <div>
-                                            Người nhận
-                                        </div>
-                                        <div>
-                                            Người giao
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            Người nhận
-                                        </div>
-                                        <div>
-                                            Người giao
-                                        </div>
-                                    </td>
-                                </tr>
+                        <div class="row">
+                            <table id="example2" class="table table-bordered table-hover col-4">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">Xuất kho (@bienbangac.ThoiGianMuon ngày @ViewBag.ngay.ToString("dd/MM/yyyy"))</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <b>Người nhận (cH/c)</b>
+                                        </td>
+                                        <td>
+                                            <b>Người giao</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td >@bienbangac.CbdaidoiNhan</td>
+                                        <td >@bienbangac.CbkhoGiao</td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
-                                <tr>
-                                    <td>s</td>
-                                    <td>bc</td>
-                                    <td>am</td>
-                                    <td>xc</td>
-                                    <td>
-                                        <div>
-                                            <b> Người nhận</b>
-                                        </div>
-                                        <div>
-                                           <b>
-                                                Người giao
-                                           </b> 
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            Người nhận
-                                        </div>
-                                        <div>
-                                            Người giao
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                       </table>
+                            <table id="example2" class="table table-bordered table-hover col-8">
+                                <thead>
+                                    <tr>
+                                        <th>Nội dung</th>
+                                        <th>Chi tiết, SL giao</th>
+                                        <th>Tình trạng</th>
+                                        <th>Ghi chú</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var s in bbSung)
+                                    {
+                                        if(s.MuonTra == 1)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <strong>Súng</strong>
+                                                    </div>
+                                                </td>
+                                                <td>@s.SoHieuSung</td>
+                                                <td>@s.TinhTrang</td>
+                                                <td>@s.GhiChu</td>
+                                            </tr>
+                                        }
+                                    }
+                                    @foreach (var tb in bbTB)
+                                    {
+                                        if (tb.MuonTra == 1)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <strong>@tb.MaTrangBi</strong>
+                                                    </div>
+                                                </td>
+                                                <td>@tb.SoLuong (cái)</td>
+                                                <td>@tb.TinhTrang</td>
+                                                <td>@tb.GhiChu</td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            <table id="example2" class="table table-bordered table-hover col-4">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">Nhập kho (@bienbangac.ThoiGianTra ngày @ViewBag.ngay1.ToString("dd/MM/yyyy"))</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <b>Người giao (cH/c)</b>
+                                        </td>
+                                        <td>
+                                            <b>Người nhận</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>@bienbangac.CbdaidoiGiao</td>
+                                        <td>@bienbangac.CbkhoNhan</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <table id="example2" class="table table-bordered table-hover col-8">
+                                <thead>
+                                    <tr>
+                                        <th>Nội dung</th>
+                                        <th>Chi tiết, SL nhận</th>
+                                        <th>Tình trạng</th>
+                                        <th>Thiếu</th>
+                                        <th>Ghi chú</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var s in bbSung)
+                                    {
+                                        if (s.MuonTra == 0)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <strong>Súng</strong>
+                                                    </div>
+                                                </td>
+                                                <td>@s.SoHieuSung</td>
+                                                <td>@s.TinhTrang</td>
+                                                <td></td>
+                                                <td>@s.GhiChu</td>
+                                            </tr>
+                                        }
+                                    }
+                                    @foreach (var tb in bbTB)
+                                    {
+                                        if (tb.MuonTra == 0)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <strong>@tb.MaTrangBi</strong>
+                                                    </div>
+                                                </td>
+                                                <td>@(tb.SoLuong - tb.Slthieu) (cái)</td>
+                                                <td>@tb.TinhTrang</td>
+                                                <td>@tb.Slthieu (cái)</td>
+                                                <td>@tb.GhiChu</td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+
+                            <a class="btn btn-primary" href="~/Gac/LichGac">Quay lại</a>
+                        </div>
+
                     </div>
                 </div>
             </div>
