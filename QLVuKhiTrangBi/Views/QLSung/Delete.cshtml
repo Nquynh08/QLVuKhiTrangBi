@@ -1,0 +1,96 @@
+﻿@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var sung = ViewBag.Sung;
+}
+
+<!-- general form elements disabled -->
+<div class="card card-secondary">
+    <div class="card-header">
+        <h3 class="card-title">Xóa thông tin súng</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="form-group">
+            <lable><b>Lý do xóa súng</b></lable>
+            <div class="mt-3"></div>
+            <form asp-action="Xoa1">
+                <label><input type="radio" name="lydo" id="op1-select">Bàn giao, đổi trả súng</label>
+                <div class="form-group row d-none" id="op1">
+                    <hr />
+                    <label class="col-sm-2 col-form-label">Số hiệu súng</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" name="sosung" value="@sung.SoHieuSung" />
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-3"></div>
+                        <label class="col-sm-2 col-form-label">Số Quyết định</label>
+                        <div class="col-sm-4">
+                            <select name="SoQd" class="form-control">
+                                <option value="" class="form-control"></option>
+                                @foreach (var item in ViewBag.dsQD)
+                                {
+                                    <option value="@item.SoQd" class="form-control">@item.SoQd</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <input type="submit" value="Xóa" class="btn btn-primary col-sm-1" />
+                     
+                </div>
+            </form>
+            <form asp-action="Xoa2">
+                <label><input type="radio" name="lydo" id="op2-select">Hỏng, mất, không sử dụng được</label>
+                <div class="form-group row d-none" id="op2">
+                    <hr />
+                    <label class="col-sm-2 col-form-label">Số hiệu súng</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" name="sosung" value="@sung.SoHieuSung" />
+                    </div>
+
+                    <input type="submit" value="Xóa" class="btn btn-primary col-sm-1" />
+                </div>
+            </form>
+            <form asp-action="Xoa3">
+                <label><input type="radio" name="lydo" id="op3-select">Nhập sai thông tin</label>
+                <div class="form-group row d-none" id="op3">
+                    <hr />
+                    <label class="col-sm-2 col-form-label">Số hiệu súng</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" name="sosung" value="@sung.SoHieuSung" />
+                    </div>
+
+                    <input type="submit" value="Xóa" class="btn btn-primary col-sm-1" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('input[type="radio"]').change(function () {
+                // Lấy id của radio button được chọn và div tương ứng
+                var radioId = $(this).attr('id');
+                var targetDivId = radioId.replace('-select', '');
+
+                $('.form-group.row').addClass("d-none");
+                // Hủy chọn tất cả radio button khác
+                $('input[type="radio"]').not(this).prop('checked', false);
+                // Nếu radio button được chọn, hiển thị div tương ứng
+                if (radioId === 'op1-select') {
+                    $('#op1').removeClass("d-none");
+                }
+                if (radioId === 'op2-select') {
+                    $('#op2').removeClass("d-none");
+                }
+                if (radioId === 'op3-select') {
+                    $('#op3').removeClass("d-none");
+                }
+            });
+        });
+    </script>
+}

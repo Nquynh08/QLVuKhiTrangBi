@@ -1,0 +1,138 @@
+﻿@{
+    ViewData["Title"] = "ChiTiet";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var yc = ViewBag.yc;
+    var ycSung = ViewBag.ycSung;
+    var ycTB = ViewBag.ycTB;
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><b>Số lượng vũ khí, trang bị, vật chất có thể sử dụng</b></h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        còn....
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title w-100">
+                            <b>Chi tiết đơn đề nghị mượn vũ khí, trang bị, vật chất của @yc.MaDaiDoi</b>
+                        </h2>
+                        <div class="row">
+                            <span style="color:black" class="col-6">
+                                Thời gian dự kiến mượn: @yc.ThoiGianDuKienMuon <br />
+                                Thời gian dự kiến trả: @yc.ThoiGianDuKienTra
+                            </span>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Nội dung</th>
+                                    <th>Chi tiết (SL)</th>
+                                    <th>Ghi chú</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var s in ycSung)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <strong>@s.MaLoaiSung</strong>
+                                            </div>
+                                        </td>
+                                        <td>@s.SoLuong (khẩu)</td>
+                                        <td>@s.GhiChu</td>
+                                    </tr>
+
+                                }
+                                @foreach (var tb in ycTB)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <strong>@tb.MaTrangBi</strong>
+                                            </div>
+                                        </td>
+                                        <td>@tb.SoLuong (cái)</td>
+                                        <td>@tb.GhiChu</td>
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
+
+                        <div class="form-group row mt-3">
+                            <a class="btn btn-secondary col-sm-1" href="@Url.Action("TieuDoan", "DonDeNghi")">Quay lại</a>
+                            <div class="col-sm-8"></div>
+                            <button class="btn btn-primary col-sm-1 accept-btn" id="accept">Xác nhận</button>
+                            <div class="col-sm-1"></div>
+                            <button class="btn btn-danger col-sm-1 reject-btn" id="reject">Từ chối</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts{
+    <script>
+        $(document).on('click', '.accept-btn', function () {
+            $.ajax({
+                url: '@Url.Action("AcceptRequest", "DonDeNghi")',
+                type: 'POST',
+                data: { requestId: '@yc.MaYc' },
+                success: function (data) {
+                    console.log('Request accepted successfully');
+                    window.location.href = '@Url.Action("TieuDoan", "DonDeNghi")';
+                },
+                error: function (error) {
+                    console.error('Error accepting request:', error);
+                }
+            });
+        });
+        $(document).on('click', '.reject-btn', function () {
+            $.ajax({
+                url: '@Url.Action("RejectRequest", "DonDeNghi")',
+                type: 'POST',
+                data: { requestId: '@yc.MaYc' },
+                success: function (data) {
+                    console.log('Request accepted successfully');
+                    window.location.href = '@Url.Action("TieuDoan", "DonDeNghi")';
+                },
+                error: function (error) {
+                    console.error('Error accepting request:', error);
+                }
+            });
+        });
+    </script>
+}

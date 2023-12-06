@@ -24,7 +24,7 @@ namespace QLVuKhiTrangBi.Controllers
             return PartialView("_dsTB", dsTB);
         }
         [HttpPost]
-        public IActionResult Index(string maTB, string tenTB, string dvt, int soluong, string? tinhtrang, string MaLoaiTb, string SoQd)
+        public IActionResult Index(string maTB, string tenTB, string dvt, int soluong, int phancap, string MaLoaiTb, string SoQd)
         {
             try
             {
@@ -39,7 +39,8 @@ namespace QLVuKhiTrangBi.Controllers
                         TenTrangBi = tenTB,
                         DonViTinh = dvt,
                         SoLuong = soluong,
-                        TinhTrang = tinhtrang,
+                        PhanCap = phancap,
+                        KhongDungDuoc = 0,
                         MaLoaiTb = MaLoaiTb,
                         SoQd = SoQd,
                     };
@@ -50,6 +51,7 @@ namespace QLVuKhiTrangBi.Controllers
                     {
                         MaBienBan = bb,
                         MaTrangBi = maTB,
+                        PhanCap = phancap,
                         HanhDong = "Nhập kho",
                         SoLuong = soluong,
                     };
@@ -64,16 +66,18 @@ namespace QLVuKhiTrangBi.Controllers
                     db.TrangBis.Update(tb);
                     db.SaveChanges();
 
-                    var bbTB = db.BanGiaoQkTrangBis.FirstOrDefault(b => b.MaBienBan == bb && b.MaTrangBi == maTB);
+                    var bbTB = db.BanGiaoQkTrangBis.FirstOrDefault(b => b.MaBienBan == bb && b.MaTrangBi == maTB && b.PhanCap == phancap);
 
+                    //nếu có phân cấp chất lượng khác nhau thì phải thêm cái khác
                     if (bbTB == null)
                     {
                         bbTB = new BanGiaoQkTrangBi()
                         {
                             MaBienBan = bb,
                             MaTrangBi = maTB,
+                            PhanCap = phancap,
                             HanhDong = "Nhập kho",
-                            SoLuong = tb.SoLuong,
+                            SoLuong = soluong,
                         };
                         db.BanGiaoQkTrangBis.Add(bbTB);
                     }

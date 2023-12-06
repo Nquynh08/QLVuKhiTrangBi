@@ -64,7 +64,13 @@ namespace QLVuKhiTrangBi.Controllers
                     TinhTrang = tinhtrangmuon[i],
                 };
                 db.BbmuonTraSungs.Add(objSung);
+
+                // ghi nhận súng đang được dùng
+                var s = db.Sungs.Find(soSung[i]);
+                s.SuDung = false; 
+                db.Sungs.Update(s);
             }
+
             for (int i = 0; i < 3; i++)
             {
                 var objTB = new BbmuonTraTb()
@@ -76,6 +82,11 @@ namespace QLVuKhiTrangBi.Controllers
                     TinhTrang = tinhtrangmuon[i],
                 };
                 db.BbmuonTraTbs.Add(objTB);
+
+                // ghi nhận số lượng trang bị đang được dùng hoặc không dùng được nữa
+                var tb = db.TrangBis.Find(MaTrangBi[i]);
+                tb.KhongDungDuoc += sl[i];
+                db.TrangBis.Update(tb);
             }
             db.SaveChanges();
             return RedirectToAction("LichGac");
@@ -125,6 +136,11 @@ namespace QLVuKhiTrangBi.Controllers
                     TinhTrang = tinhtrangtra[i],
                 };
                 db.BbmuonTraSungs.Add(objSung);
+
+                // trả lại trạng thái súng không được dùng
+                var s = db.Sungs.Find(soSung[i]);
+                s.SuDung = true;
+                db.Sungs.Update(s);
             }
             for (int i = 0; i < 3; i++)
             {
@@ -139,6 +155,11 @@ namespace QLVuKhiTrangBi.Controllers
                     Slthieu = slThieu[i],
                 };
                 db.BbmuonTraTbs.Add(objTB);
+
+                // trả lại trang bị cho hệ thống
+                var tb = db.TrangBis.Find(MaTrangBi[i]);
+                tb.KhongDungDuoc -= sl[i];
+                db.TrangBis.Update(tb);
             }
             db.SaveChanges();
 

@@ -9,5 +9,7 @@ public partial class LoaiSung
 
     public string? TenLoaiSung { get; set; }
 
+    public int? SoLuong { get; set; }
+
     public virtual ICollection<Sung> Sungs { get; set; } = new List<Sung>();
 }

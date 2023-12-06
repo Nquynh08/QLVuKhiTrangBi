@@ -106,7 +106,7 @@ public partial class QlvuKhiTrangBiContext : DbContext
 
         modelBuilder.Entity<BanGiaoQkTrangBi>(entity =>
         {
-            entity.HasKey(e => new { e.MaBienBan, e.MaTrangBi });
+            entity.HasKey(e => new { e.MaBienBan, e.MaTrangBi, e.PhanCap }).HasName("PK_BanGiaoQK_TrangBi_1");
 
             entity.ToTable("BanGiaoQK_TrangBi");
 
@@ -318,7 +318,7 @@ public partial class QlvuKhiTrangBiContext : DbContext
 
             entity.HasOne(d => d.MaTrangBiNavigation).WithMany(p => p.BienCheTbs)
                 .HasForeignKey(d => d.MaTrangBi)
-                .HasConstraintName("FK__BienCheTB__MaTra__55F4C372");
+                .HasConstraintName("FK_BienCheTB_TrangBi");
         });
 
         modelBuilder.Entity<CanBoDaiDoi>(entity =>
@@ -568,7 +568,6 @@ public partial class QlvuKhiTrangBiContext : DbContext
                 .HasMaxLength(10)
                 .IsFixedLength()
                 .HasColumnName("SoQD");
-            entity.Property(e => e.TinhTrang).HasMaxLength(50);
 
             entity.HasOne(d => d.MaLoaiSungNavigation).WithMany(p => p.Sungs)
                 .HasForeignKey(d => d.MaLoaiSung)
@@ -605,7 +604,7 @@ public partial class QlvuKhiTrangBiContext : DbContext
 
         modelBuilder.Entity<TrangBi>(entity =>
         {
-            entity.HasKey(e => e.MaTrangBi);
+            entity.HasKey(e => e.MaTrangBi).HasName("PK_TrangBi_1");
 
             entity.ToTable("TrangBi");
 
@@ -625,9 +624,6 @@ public partial class QlvuKhiTrangBiContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("SoQD");
             entity.Property(e => e.TenTrangBi).HasMaxLength(50);
-            entity.Property(e => e.TinhTrang)
-                .HasMaxLength(10)
-                .IsFixedLength();
 
             entity.HasOne(d => d.MaLoaiTbNavigation).WithMany(p => p.TrangBis)
                 .HasForeignKey(d => d.MaLoaiTb)

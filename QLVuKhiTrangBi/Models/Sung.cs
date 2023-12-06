@@ -9,7 +9,9 @@ public partial class Sung
 
     public string? DonViTinh { get; set; }
 
-    public string? TinhTrang { get; set; }
+    public int? PhanCap { get; set; }
+
+    public bool? SuDung { get; set; }
 
     public string? GhiChu { get; set; }
 

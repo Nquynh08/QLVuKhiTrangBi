@@ -13,7 +13,9 @@ public partial class TrangBi
 
     public int? SoLuong { get; set; }
 
-    public string? TinhTrang { get; set; }
+    public int? PhanCap { get; set; }
+
+    public int? KhongDungDuoc { get; set; }
 
     public string? GhiChu { get; set; }
 

@@ -3,18 +3,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QLVuKhiTrangBi.Data;
 using QLVuKhiTrangBi.Models;
+using System.Linq;
 
 namespace QLVuKhiTrangBi.Controllers
 {
-    [Authorize(Policy = "RequireDaiDoi")]
+
     public class DonDeNghiController : Controller
     {
         QlvuKhiTrangBiContext db = new QlvuKhiTrangBiContext();
+        [Authorize(Policy = "RequireDaiDoi")]
         public IActionResult Index()
         {
             return View();
         }
-
+        [Authorize(Policy = "RequireTieuDoan")]
+        public IActionResult TieuDoan()
+        {
+            return View();
+        }
+        [Authorize(Policy = "RequireDaiDoi")]
         public PartialViewResult DSDNDaiDoi()
         {
             var tenDn = HttpContext.Session.GetString("UserName");
@@ -25,10 +32,17 @@ namespace QLVuKhiTrangBi.Controllers
             select c.MaDaiDoiNavigation.TenDaiDoi
             ).FirstOrDefault();
             ViewBag.daidoi = daidoi;
+            var madd = (
+            from tk in db.TaiKhoans
+            join c in db.CanBoDaiDois on tk.MaQn equals c.MaQn
+            where tk.TenDn == tenDn
+            select c.MaDaiDoi
+            ).FirstOrDefault();
 
-            var dsyc = db.Yeucaumuonvktbs.Include(yc => yc.MaCanBoDaiDoiNavigation).ToList();
+            var dsyc = db.Yeucaumuonvktbs.Where(yc => yc.MaDaiDoi == madd).Include(yc => yc.MaCanBoDaiDoiNavigation).ToList();
             return PartialView("_dsyc", dsyc);
         }
+        [Authorize(Policy = "RequireDaiDoi")]
         public IActionResult Create()
         {
             var dsLoaiSung = db.LoaiSungs.ToList();
@@ -43,7 +57,7 @@ namespace QLVuKhiTrangBi.Controllers
                where tk.TenDn == tenDn
                select c.HoTen
                ).FirstOrDefault();
-             ViewBag.canbo = canbo;
+            ViewBag.canbo = canbo;
 
             var daidoi = (
             from tk in db.TaiKhoans
@@ -56,6 +70,7 @@ namespace QLVuKhiTrangBi.Controllers
             return View();
         }
         [HttpPost]
+        [Authorize(Policy = "RequireDaiDoi")]
         public IActionResult Create(Yeucaumuonvktb model, List<string> MaLoaiSung, List<int> slLoaiSung, List<string> MaTrangBi, List<int> slTrangBi)
         {
 
@@ -72,7 +87,7 @@ namespace QLVuKhiTrangBi.Controllers
 
             db.Yeucaumuonvktbs.Add(yeuCauMuon);
             db.SaveChanges();
-                      
+
             for (int i = 0; i < MaLoaiSung.Count; i++)
             {
                 var detailSung = new YeucauLoaisung
@@ -98,6 +113,61 @@ namespace QLVuKhiTrangBi.Controllers
             db.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+
+        [Authorize(Policy = "RequireTieuDoan")]
+        public IActionResult ChiTiet(int id)
+        {
+            var yc = db.Yeucaumuonvktbs.SingleOrDefault(yc => yc.MaYc == id);
+            ViewBag.yc = yc;
+            var ycSung = db.YeucauLoaisungs.Where(yc => yc.MaYc == id).ToList();
+            ViewBag.ycSung = ycSung;
+            var ycTB = db.YeucauLoaitbs.Where(yc => yc.MaYc == id).ToList();
+            ViewBag.ycTB = ycTB;
+
+            return View();
+        }
+        [Authorize(Policy = "RequireTieuDoan")]
+        public PartialViewResult DSDNTieuDoan()
+        {
+            var tenDn = HttpContext.Session.GetString("UserName");
+            var daidoi = (
+            from tk in db.TaiKhoans
+            join c in db.CanBoDaiDois on tk.MaQn equals c.MaQn
+            where tk.TenDn == tenDn
+            select c.MaDaiDoiNavigation.TenDaiDoi
+            ).FirstOrDefault();
+            ViewBag.daidoi = daidoi;
+
+            var dsyc = db.Yeucaumuonvktbs.Include(yc => yc.MaCanBoDaiDoiNavigation).ToList();
+            return PartialView("_dsyctd", dsyc);
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "RequireTieuDoan")]
+        public ActionResult AcceptRequest(int requestId)
+        {
+            var yc = db.Yeucaumuonvktbs.Find(requestId);
+
+            yc.TrangThai = "Đã được duyệt";
+            db.Yeucaumuonvktbs.Update(yc);
+            db.SaveChanges();
+
+            return Json(new { success = true });
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "RequireTieuDoan")]
+        public ActionResult RejectRequest(int requestId)
+        {
+            var yc = db.Yeucaumuonvktbs.Find(requestId);
+
+            yc.TrangThai = "Đề nghị bị từ chối";
+            db.Yeucaumuonvktbs.Update(yc);
+            db.SaveChanges();
+
+            return Json(new { success = true });
+
         }
     }
 }

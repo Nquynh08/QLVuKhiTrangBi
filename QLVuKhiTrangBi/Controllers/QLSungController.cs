@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using QLVuKhiTrangBi.Data;
 using QLVuKhiTrangBi.Models;
+using System.Reflection.Metadata.Ecma335;
 
 namespace QLVuKhiTrangBi.Controllers
 {
@@ -23,7 +24,7 @@ namespace QLVuKhiTrangBi.Controllers
             return PartialView("_dssung", dssung);
         }
         [HttpPost]
-        public IActionResult Index(string sosung, string dvt, string tinhtrang, string MaLoaiSung, string SoQd)
+        public IActionResult Index(string sosung, string dvt, int phancap, string MaLoaiSung, string SoQd)
         {
             try
             {
@@ -34,11 +35,17 @@ namespace QLVuKhiTrangBi.Controllers
                     {
                         SoHieuSung = sosung,
                         DonViTinh = dvt,
-                        TinhTrang = tinhtrang,
+                        PhanCap = phancap,
+                        SuDung = true, //sử dụng = true là có thể sử dụng, false là đang sử dụng hoặc không sử dụng được
                         MaLoaiSung = MaLoaiSung,
                         SoQd = SoQd,
                     };
                     db.Sungs.Add(sung);
+                    db.SaveChanges();
+
+                    var loaiSung = db.LoaiSungs.SingleOrDefault(l => l.MaLoaiSung == MaLoaiSung);
+                    loaiSung.SoLuong += 1;
+                    db.LoaiSungs.Update(loaiSung);
                     db.SaveChanges();
 
                     var bb = string.Format("BB-{0}", SoQd);
@@ -46,6 +53,7 @@ namespace QLVuKhiTrangBi.Controllers
                     {
                         MaBienBan = bb,
                         SoHieuSung = sosung,
+                        PhanCap = phancap,
                         HanhDong = "Nhập kho",
                     };
                     db.BanGiaoQkSungs.Add(bbSung);
@@ -68,8 +76,14 @@ namespace QLVuKhiTrangBi.Controllers
         public IActionResult Delete(string id)
         {
             var s = db.Sungs.Find(id);
-            db.Sungs.Remove(s);
-            db.SaveChanges();
+            ViewBag.Sung = s;
+            var dsQD = db.QuyetDinhs.ToList();
+            ViewBag.dsQD = dsQD;
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Delete()
+        {
             return RedirectToAction("Index");
         }
         public IActionResult Edit(string id)
@@ -89,7 +103,7 @@ namespace QLVuKhiTrangBi.Controllers
             {
                 s.SoHieuSung = model.SoHieuSung;
                 s.DonViTinh = model.DonViTinh;
-                s.TinhTrang = model.TinhTrang;
+                s.PhanCap = model.PhanCap;
                 s.MaLoaiSung = model.MaLoaiSung;
                 s.SoQd = model.SoQd;
                 db.Sungs.Update(s);

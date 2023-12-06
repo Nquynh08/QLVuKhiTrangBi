@@ -4,16 +4,15 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="d-flex justify-content-end m-3 mr-5">
-    <a href="/DonDeNghi/Create" class="btn btn-primary">Thêm yêu cầu mới</a>
-</div>
 
-<div id="allDonDeNghiDD"></div>
+<div id="allDonDeNghi"></div>
 
 @section scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#allDonDeNghiDD').load('/DonDeNghi/DSDNDaiDoi');
+            $('#allDonDeNghi').load('/DonDeNghi/DSDNTieuDoan');
         });
     </script>
-}
+    }
+
+

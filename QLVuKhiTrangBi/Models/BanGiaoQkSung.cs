@@ -9,6 +9,8 @@ public partial class BanGiaoQkSung
 
     public string SoHieuSung { get; set; } = null!;
 
+    public int? PhanCap { get; set; }
+
     public string? HanhDong { get; set; }
 
     public string? GhiChu { get; set; }
