@@ -49,8 +49,8 @@
                                     <th>Đơn vị tính</th>
                                     <th>Loại súng</th>
                                     <th>Phân cấp</th>
+                                    <th>Hành động</th>
                                     <th>Ghi chú</th>
-                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -59,14 +59,12 @@
                                     <tr>
                                         <td>@(count1++)</td>
                                         <td>@item.SoHieuSung</td>
-                                        <td>@item.SoHieuSungNavigation.DonViTinh</td>
-                                        <td>@item.SoHieuSungNavigation.MaLoaiSung</td>
-                                        <td>@item.SoHieuSungNavigation.PhanCap</td>
-                                        <td>@item.SoHieuSungNavigation.GhiChu</td>
-                                        <td>
-                                            <a asp-action="Edit" asp-route-id="@item.SoHieuSung">Edit</a> |
-                                            <a asp-action="Delete" asp-route-id="@item.SoHieuSung">Delete</a>
-                                        </td>
+                                        <td>khẩu</td>
+                                        <td>@item.LoaiSung</td>
+                                        <td>@item.PhanCap</td>
+                                        <td>@item.HanhDong</td>
+                                        <td>@item.GhiChu</td>
+                                       
                                     </tr>
                                 }
                             </tbody>
@@ -110,6 +108,7 @@
                                     <th>Đơn vị tính</th>
                                     <th>Phân cấp</th>
                                     <th>Số lượng</th>
+                                    <th>Hành động</th>
                                     <th>Ghi chú</th>
                                     <th></th>
                                 </tr>
@@ -124,6 +123,7 @@
                                         <td>@item.MaTrangBiNavigation.DonViTinh</td>
                                         <td>@item.PhanCap</td>
                                         <td>@item.SoLuong</td>
+                                        <td>@item.HanhDong</td>
                                         <td>@item.MaTrangBiNavigation.GhiChu</td>
                                         <td>
                                             <a asp-action="Edit" asp-route-id="@item.MaTrangBi">Edit</a> |

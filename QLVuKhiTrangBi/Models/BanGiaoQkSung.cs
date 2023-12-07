@@ -13,9 +13,9 @@ public partial class BanGiaoQkSung
 
     public string? HanhDong { get; set; }
 
+    public string? LoaiSung { get; set; }
+
     public string? GhiChu { get; set; }
 
     public virtual BbbanGiaoQk MaBienBanNavigation { get; set; } = null!;
-
-    public virtual Sung SoHieuSungNavigation { get; set; } = null!;
 }

@@ -96,16 +96,14 @@ public partial class QlvuKhiTrangBiContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.GhiChu).HasColumnType("ntext");
             entity.Property(e => e.HanhDong).HasMaxLength(50);
+            entity.Property(e => e.LoaiSung)
+                .HasMaxLength(10)
+                .IsFixedLength();
 
             entity.HasOne(d => d.MaBienBanNavigation).WithMany(p => p.BanGiaoQkSungs)
                 .HasForeignKey(d => d.MaBienBan)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_BanGiaoQK_Sung_BBBanGiaoQK");
-
-            entity.HasOne(d => d.SoHieuSungNavigation).WithMany(p => p.BanGiaoQkSungs)
-                .HasForeignKey(d => d.SoHieuSung)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_BanGiaoQK_Sung_Sung");
         });
 
         modelBuilder.Entity<BanGiaoQkTrangBi>(entity =>
@@ -190,14 +188,10 @@ public partial class QlvuKhiTrangBiContext : DbContext
             entity.ToTable("BBBaoDuong");
 
             entity.Property(e => e.MabbBaoDuong)
-                .HasMaxLength(10)
+                .HasMaxLength(20)
                 .IsFixedLength();
-            entity.Property(e => e.CanBoDaiDoi)
-                .HasMaxLength(10)
-                .IsFixedLength();
-            entity.Property(e => e.CanBoKho)
-                .HasMaxLength(10)
-                .IsFixedLength();
+            entity.Property(e => e.CanBoDaiDoi).HasMaxLength(50);
+            entity.Property(e => e.CanBoKho).HasMaxLength(50);
             entity.Property(e => e.DaiDoi)
                 .HasMaxLength(10)
                 .IsFixedLength();
@@ -419,12 +413,13 @@ public partial class QlvuKhiTrangBiContext : DbContext
             entity.ToTable("CTBaoDuong");
 
             entity.Property(e => e.MabbBaoDuong)
-                .HasMaxLength(10)
+                .HasMaxLength(20)
                 .IsFixedLength();
             entity.Property(e => e.SoHieuSung)
                 .HasMaxLength(10)
                 .IsFixedLength();
             entity.Property(e => e.GhiChu).HasColumnType("ntext");
+            entity.Property(e => e.TinhTrang).HasMaxLength(50);
 
             entity.HasOne(d => d.MabbBaoDuongNavigation).WithMany(p => p.CtbaoDuongs)
                 .HasForeignKey(d => d.MabbBaoDuong)

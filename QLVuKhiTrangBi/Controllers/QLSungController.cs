@@ -20,7 +20,7 @@ namespace QLVuKhiTrangBi.Controllers
         }
         public PartialViewResult DSSung()
         {
-            var dssung = db.Sungs.ToList();
+            var dssung = db.Sungs.Where(s => s.SuDung==true).ToList();
             return PartialView("_dssung", dssung);
         }
         [HttpPost]
@@ -55,7 +55,8 @@ namespace QLVuKhiTrangBi.Controllers
                         SoHieuSung = sosung,
                         PhanCap = phancap,
                         HanhDong = "Nhập kho",
-                    };
+                        LoaiSung = sung.MaLoaiSung,
+                    }; 
                     db.BanGiaoQkSungs.Add(bbSung);
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -87,9 +88,55 @@ namespace QLVuKhiTrangBi.Controllers
 
             return View();
         }
+
         [HttpPost]
-        public IActionResult Delete()
+        // Xóa 1 là xóa súng do xuất kho, có quyết định đổi trả, xuất kho kèm theo
+        public IActionResult Xoa1(string sosung, string SoQd, string ghichu)
         {
+            var sung = db.Sungs.Find(sosung);
+
+            var bb = string.Format("BB-{0}", SoQd);
+
+            var bgSung = new BanGiaoQkSung()
+            {
+                MaBienBan = bb,
+                SoHieuSung = sosung,
+                PhanCap = sung.PhanCap,
+                HanhDong = "Xuất kho, đổi trả súng",
+                GhiChu = ghichu,
+                LoaiSung = sung.MaLoaiSung,
+            };
+            db.BanGiaoQkSungs.Add(bgSung);
+            db.SaveChanges();
+
+            db.Sungs.Remove(sung);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        // Xóa 2 là xóa súng do hỏng, mất, không sử dụng được
+        public IActionResult Xoa2(string sosung, string lydo)
+        {
+            var sung = db.Sungs.Find(sosung);
+            sung.SuDung = false;
+            sung.GhiChu = lydo;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        // Xóa 3 là xóa súng do nhập sai thông tin, xóa đi để nhập lại
+        // xóa thông tin súng và thông tin biên bản bàn giao quân khí
+        public IActionResult Xoa3(string sosung, string mabb)
+        {
+            var sung = db.Sungs.Find(sosung);
+
+            var bbS = db.BanGiaoQkSungs.SingleOrDefault(b => b.MaBienBan == mabb && b.SoHieuSung == sosung);
+
+            db.BanGiaoQkSungs.Remove(bbS);
+            db.SaveChanges();
+
+            db.Sungs.Remove(sung);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
         public IActionResult Edit(string id)
