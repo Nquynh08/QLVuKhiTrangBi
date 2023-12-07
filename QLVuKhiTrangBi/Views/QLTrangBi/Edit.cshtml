@@ -16,12 +16,11 @@
                     <div class="card-body">
                         <form asp-action="Edit" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
                             <div class="form-group row">
                                 <div class="col-sm-3"></div>
                                 <label asp-for="TenTrangBi" class="col-sm-2 col-form-label">Tên trang bị</label>
                                 <div class="col-sm-4">
-                                    <input asp-for="TenTrangBi" class="form-control" name="tenTB" />
+                                    <input asp-for="TenTrangBi" class="form-control" name="tenTB" id="tenTB" asp-readonly="true" />
                                 </div>
                                 <span asp-validation-for="TenTrangBi" class="text-danger"></span>
                             </div>
@@ -29,45 +28,35 @@
                                 <div class="col-sm-3"></div>
                                 <label asp-for="DonViTinh" class="col-sm-2 col-form-label">Đơn vị tính</label>
                                 <div class="col-sm-4">
-                                    <input asp-for="DonViTinh" class="form-control" name="dvt" />
+                                    <input asp-for="DonViTinh" class="form-control" name="dvt" id="dvt" asp-readonly="true" />
                                 </div>
                                 <span asp-validation-for="DonViTinh" class="text-danger"></span>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-3"></div>
-                                <label asp-for="PhanCap" class="col-sm-2 col-form-label">Phân cấp chất lượng</label>
+                                <label asp-for="SoLuong" class="col-sm-2 col-form-label">Số lượng</label>
                                 <div class="col-sm-4">
-                                    <input asp-for="PhanCap" class="form-control" name="phancap" />
+                                    <input asp-for="SoLuong" class="form-control" name="soluong" asp-readonly="true" />
                                 </div>
-                                <span asp-validation-for="PhanCap" class="text-danger"></span>
+                                <span asp-validation-for="SoLuong" class="text-danger"></span>
                             </div>
                       
                             <div class="form-group row">
                                 <div class="col-sm-3"></div>
-                                <label asp-for="MaLoaiTb" class="col-sm-2 col-form-label">Loại trang bị</label>
+                                <label asp-for="KhongDungDuoc" class="col-sm-2 col-form-label">Số lượng không dùng được</label>
                                 <div class="col-sm-4">
-                                    <select name="MaLoaiTb" class="form-control">
-                                        <option value="" class="form-control"></option>
-                                        @foreach (var item in ViewBag.dsLoaiTB)
-                                        {
-                                            <option value="@item.MaLoaiTb" class="form-control">@item.TenLoaiTb</option>
-                                        }
-                                    </select>
+                                    <input asp-for="KhongDungDuoc" class="form-control" name="slkhongdung" />
                                 </div>
+                                <span asp-validation-for="SoLuong" class="text-danger"></span>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-3"></div>
-                                <label asp-for="SoQd" class="col-sm-2 col-form-label">Số Quyết định</label>
+                                <label asp-for="MaLoaiTb" class="col-sm-2 col-form-label">Loại trang bị</label>
                                 <div class="col-sm-4">
-                                    <select name="SoQd" class="form-control">
-                                        <option value="" class="form-control"></option>
-                                        @foreach (var item in ViewBag.dsQD)
-                                        {
-                                            <option value="@item.SoQd" class="form-control">@item.SoQd</option>
-                                        }
-                                    </select>
+                                    <input asp-for="MaLoaiTb" class="form-control" name="MaLoaiTb" />
                                 </div>
                             </div>
+                       
                             <div class="form-group row">
                                 <div class="col-sm-4"></div>
                                 <input type="submit" value="Xác nhận" class="btn btn-primary col-sm-1" />

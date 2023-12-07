@@ -154,11 +154,8 @@ namespace QLVuKhiTrangBi.Controllers
             var s = db.Sungs.Find(model.SoHieuSung);
             try
             {
-                s.SoHieuSung = model.SoHieuSung;
                 s.DonViTinh = model.DonViTinh;
                 s.PhanCap = model.PhanCap;
-                s.MaLoaiSung = model.MaLoaiSung;
-                s.SoQd = model.SoQd;
                 db.Sungs.Update(s);
                 db.SaveChanges();
                 return RedirectToAction("Index");

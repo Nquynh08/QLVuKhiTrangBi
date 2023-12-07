@@ -1,0 +1,369 @@
+﻿@{
+    ViewData["Title"] = "ChoMuon";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var yc = ViewBag.yc;
+    var ycSung = ViewBag.ycSung;
+    var ycTB = ViewBag.ycTB;
+    var jsonDsLoaiSung = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.dsLoaiSung);
+    //var jsonDsSung = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.dsSung);
+    var jsonDsTB = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.dsTB);
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><b>Số lượng vũ khí, trang bị, vật chất có thể sử dụng</b></h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        còn....
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title w-100">
+                            <b>Chi tiết đơn đề nghị mượn vũ khí, trang bị, vật chất của @yc.MaDaiDoi</b>
+                        </h2>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="row">
+                            <span style="color:black" class="col-6">
+                                Thời gian dự kiến mượn: @yc.ThoiGianDuKienMuon <br />
+                                Thời gian dự kiến trả: @yc.ThoiGianDuKienTra
+                            </span>
+                        </div>
+
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Nội dung</th>
+                                    <th>Chi tiết (SL)</th>
+                                    <th>Ghi chú</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var s in ycSung)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <strong>@s.MaLoaiSung</strong>
+                                            </div>
+                                        </td>
+                                        <td>@s.SoLuong (khẩu)</td>
+                                        <td>@s.GhiChu</td>
+                                    </tr>
+
+                                }
+                                @foreach (var tb in ycTB)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <strong>@tb.MaTrangBi</strong>
+                                            </div>
+                                        </td>
+                                        <td>@tb.SoLuong (cái)</td>
+                                        <td>@tb.GhiChu</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title w-100">
+                            <b>Biên bản mượn VKTB theo yêu cầu số @yc.MaYc, @yc.TenYc</b>
+                        </h2>
+                        <div class="row">
+                            <span style="color:black" class="col-6">
+                                Thời gian mượn: @DateTime.Now
+                            </span>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <form asp-action="ChoMuon" method="post">
+                            <div class="form-group row">
+                                <label class="col-sm-1 col-form-label">Người giao:</label>
+                                <div class="col-sm-3">
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <input type="text" class="form-control" name="nguoigiao" value="@User.Identity.Name" />
+                                    }
+                                </div>
+                                <label class="col-sm-1 col-form-label">Mã đại đội</label>
+                                <div class="col-sm-2">
+                                    <input class="form-control" name="MaDaiDoi" value="@ViewBag.yc.MaDaiDoi" />
+                                </div>
+                                <label class="col-sm-2 col-form-label">Người nhận (cH/c):</label>
+                                <div class="col-sm-3">
+                                    <select name="cbDaiDoi" class="form-control">
+                                        @foreach (var item in ViewBag.dsCBc)
+                                        {
+                                            <option value="@item.HoTen" class="form-control">@item.HoTen</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <label>Nội dung mượn</label>
+
+
+                            <div class="card card-info">
+                                <div class="card-header">
+                                    <h3 class="card-title">Súng</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <div class="col-3 row">
+                                            <label class="col-4 col-form-label">Loại Súng</label>
+                                            <div class="col-sm-8">
+                                                <select name="MaLoaiSung" class="form-control">
+                                                    <option value="" class="form-control"></option>
+                                                    @foreach (var item in ViewBag.dsLoaiSung)
+                                                    {
+                                                        <option value="@item.MaLoaiSung" class="form-control">@item.TenLoaiSung</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-9 row">
+                                            <div class="col-sm-1"></div>
+                                            <label class="col-sm-2 col-form-label">Số hiệu súng</label>
+                                            <input type="text" class="col-sm-2 form-control" name="sosung" />
+                                            <label class="col-sm-2 col-form-label">Tình trạng</label>
+                                            <input type="text" name="tinhtrangmuon" value="Bảo đảm" class="form-control col-sm-2" />
+                                            <div class="col-sm-1"></div>
+                                            <input type="button" value="Xóa" class="btn btn-danger col-1" id="removeSectionButton" />
+                                        </div>
+                                    </div>
+                                    <div id="dynamicSectionsContainer"></div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-1"></div>
+                                        <input type="button" value="Thêm loại súng" class="btn btn-success col-sm-2" id="addLoaiSungButton" />
+                                        <div class="col-sm-4"></div>
+                                        <input type="button" value="Thêm súng" class="btn btn-success col-sm-1" id="addSectionButton" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card card-info">
+                                <div class="card-header">
+                                    <h3 class="card-title">Trang bị</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <div class="col-3 row">
+                                            <label class="col-4 col-form-label">Trang bị</label>
+                                            <div class="col-sm-8">
+                                                <select name="MaTrangBi" class="form-control">
+                                                    <option value="" class="form-control"></option>
+                                                    @foreach (var item in ViewBag.dsTB)
+                                                    {
+                                                        <option value="@item.MaTrangBi" class="form-control">@item.TenTrangBi</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-9 row">
+                                            <label class="col-sm-2 col-form-label">Số lượng</label>
+                                            <input type="number" class="col-sm-1 form-control" name="soluong" />
+                                            <label class="col-sm-2 col-form-label">Tình trạng</label>
+                                            <input type="text" name="tinhtrangmuon" value="Bảo đảm" class="form-control col-sm-2" />
+                                            <label class="col-sm-1 col-form-label">Ghi chú</label>
+                                            <input type="text" name="ghichu" class="form-control col-sm-2" />
+
+                                            <div class="col-sm-1"></div>
+                                            <input type="button" value="Xóa" class="btn btn-danger col-1" id="removeTBButton" />
+                                        </div>
+                                    </div>
+                                    <div id="addTB"></div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-5"></div>
+                                        <input type="button" value="Thêm tiếp" class="btn btn-success col-sm-2" id="addTbButton" />
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="submit" value="Xác nhận" class="btn btn-primary float-right"/>
+                        </form>
+                        
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#allDonDeNghi').load('/DonDeNghi/DSDNDaiDoi');
+
+            $('#addSectionButton').click(function () {
+                addSection();
+            });
+            $('#addLoaiSungButton').click(function () {
+                addLoaiSung();
+            });
+            $('#addTbButton').click(function () {
+                addTBSection();
+            });
+
+            // Use event delegation for dynamically added elements
+            $('#dynamicSectionsContainer').on('click', '.removeSectionButton', function () {
+                $(this).closest('.form-group').remove();
+            });
+        });
+
+        var sectionCounter = 0;
+        var maxSections = @ViewBag.dsLoaiSung.Count-1;
+        var dsLoaiSungOptions = JSON.parse('@Html.Raw(jsonDsLoaiSung)');
+
+        function addLoaiSung() {
+            if (sectionCounter < maxSections) {
+                sectionCounter++;
+
+                var html = '<div class="form-group row">';
+                html += '<div class="col-3 row">';
+                html += '<label class="col-4 col-form-label">Loại Súng</label>';
+                html += '<div class="col-sm-8">';
+                html += '<select name="MaLoaiSung" class="form-control">';
+                html += '<option value="" class="form-control"></option>';
+
+                dsLoaiSungOptions.forEach(function (item) {
+                    html += '<option value="' + item.MaLoaiSung + '" class="form-control">' + item.TenLoaiSung + '</option>';
+                });
+
+                html += '</select>';
+                html += '</div>';
+                html += '</div>';
+                html += '<div class="col-9 row">';
+                html += '<div class="col-sm-1"></div>';
+                html += '<label class="col-sm-2 col-form-label">Số hiệu súng</label>';
+                html += '<input type="text" class="col-sm-2 form-control" name="sosung" />';
+                html += '<label class="col-sm-2 col-form-label">Tình trạng</label>';
+                html += '<input type="text" name="tinhtrangmuon" value="Bảo đảm" class="form-control col-sm-2" />';
+                html += '<div class="col-sm-1"></div>';
+                html += '<input type="button" value="Xóa" class="btn btn-danger col-1 removeSectionButton" />';
+                html += '</div>';
+                html += '</div>';
+
+                $('#dynamicSectionsContainer').append(html);
+
+            } else {
+                $('#addLoaiSungButton').hide();
+            }
+        }
+
+
+        function addSection() {
+            var html = '<div class="form-group row">';
+            html += '<div class="col-3 row"></div>';
+            html += '<div class="col-9 row">';
+            html += '<div class="col-sm-1"></div>';
+            html += '<label class="col-sm-2 col-form-label">Số hiệu súng</label>';
+            html += '<input type="text" class="col-sm-2 form-control" name="sosung" />';
+            html += '<label class="col-sm-2 col-form-label">Tình trạng</label>';
+            html += '<input type="text" name="tinhtrangmuon" value="Bảo đảm" class="form-control col-sm-2" />';
+            html += '<div class="col-sm-1"></div>';
+            html += '<input type="button" value="Xóa" class="btn btn-danger col-1 removeSectionButton"/>';
+            html += '</div>';
+            html += '</div>';
+
+            $('#dynamicSectionsContainer').append(html);
+        }
+
+
+        var sectionCounterTB = 0;
+        var maxSectionsTB = @ViewBag.dsTB.Count-1;
+        var dsTBOptions = JSON.parse('@Html.Raw(jsonDsTB)');
+        function addTBSection() {
+            if (sectionCounterTB < maxSectionsTB) {
+                sectionCounterTB++;
+
+                var html = '<div class="form-group row">';
+                html += '<div class="col-3 row">';
+                html += '<label class="col-4 col-form-label">Trang bị</label>';
+                html += '<div class="col-sm-8">';
+                html += '<select name="MaTrangBi" class="form-control">';
+                html += '<option value="" class="form-control"></option>';
+
+                // Thêm các tùy chọn vào phần tử select
+                dsTBOptions.forEach(function (item) {
+                    html += '<option value="' + item.MaTrangBi + '" class="form-control">' + item.TenTrangBi + '</option>';
+                });
+
+                html += '</select>';
+                html += '</div>';
+                html += '</div>';
+                html += '<div class="col-9 row">';
+                html += '<label class="col-sm-2 col-form-label">Số lượng</label>';
+                html += '<input type="number" class="col-sm-1 form-control" name="soluong" />';
+                html += '<label class="col-sm-2 col-form-label">Tình trạng</label>';
+                html += '<input type="text" name="tinhtrangmuon" value="Bảo đảm" class="form-control col-sm-2" />';
+                html += '<label class="col-sm-1 col-form-label">Ghi chú</label>';
+                html += '<input type="text" name="ghichu" class="form-control col-sm-2" />';
+                html += '<div class="col-sm-1"></div>';
+                html += '<input type="button" value="Xóa" class="btn btn-danger col-1 removeTBButton" />';
+                html += '</div>';
+                html += '</div>';
+
+
+                // Append the new HTML section to the container
+                $('#addTB').append(html);
+
+            } else {
+                $('#addTbButton').hide();
+            }
+        }
+        // Add click event for removing TB sections
+        $(document).on('click', '#removeTBButton', function () {
+            $(this).closest('.form-group').remove();
+        });
+    </script>
+}
+

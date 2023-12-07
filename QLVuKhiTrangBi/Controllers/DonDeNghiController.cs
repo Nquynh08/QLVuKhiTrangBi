@@ -21,6 +21,11 @@ namespace QLVuKhiTrangBi.Controllers
         {
             return View();
         }
+        [Authorize(Policy = "RequireTroLy")]
+        public IActionResult TroLy()
+        {
+            return View();
+        }
         [Authorize(Policy = "RequireDaiDoi")]
         public PartialViewResult DSDNDaiDoi()
         {
@@ -82,7 +87,8 @@ namespace QLVuKhiTrangBi.Controllers
                 ThoiGianDuKienMuon = model.ThoiGianDuKienMuon,
                 ThoiGianDuKienTra = model.ThoiGianDuKienTra,
                 TrangThai = "Chờ xác nhận",
-                GhiChu = model.GhiChu
+                GhiChu = model.GhiChu,
+                TenYc = model.TenYc,
             };
 
             db.Yeucaumuonvktbs.Add(yeuCauMuon);
@@ -167,7 +173,36 @@ namespace QLVuKhiTrangBi.Controllers
             db.SaveChanges();
 
             return Json(new { success = true });
+        }
 
+        [Authorize(Policy = "RequireTroLy")]
+        public PartialViewResult DSDNTroLy()
+        {
+            var dsyc = db.Yeucaumuonvktbs.Where(y => y.TrangThai == "Đã được duyệt").Include(yc => yc.MaCanBoDaiDoiNavigation).ToList();
+            return PartialView("_dsyctl", dsyc);
+        }
+        [Authorize(Policy = "RequireTroLy")]
+        public IActionResult ChoMuon(int id)
+        {
+            var yc = db.Yeucaumuonvktbs.SingleOrDefault(yc => yc.MaYc == id);
+            ViewBag.yc = yc;
+            var ycSung = db.YeucauLoaisungs.Where(yc => yc.MaYc == id).ToList();
+            ViewBag.ycSung = ycSung;
+            var ycTB = db.YeucauLoaitbs.Where(yc => yc.MaYc == id).ToList();
+            ViewBag.ycTB = ycTB;
+            var dsCBc = db.CanBoDaiDois.Where(c => c.MaDaiDoi == yc.MaDaiDoi).ToList();
+            ViewBag.dsCBc = dsCBc;
+
+            var dsLoaiSung = db.LoaiSungs.ToList();
+            ViewBag.dsLoaiSung = dsLoaiSung;
+
+            //var dsSung = db.Sungs.Where(s => s.SuDung == true).ToList();
+            //ViewBag.dsSung = dsSung;
+
+            var dsTB = db.TrangBis.ToList();
+            ViewBag.dsTB = dsTB;
+
+            return View();
         }
     }
 }

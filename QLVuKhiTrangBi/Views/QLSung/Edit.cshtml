@@ -21,9 +21,8 @@
                                 <div class="col-sm-3"></div>
                                 <label asp-for="SoHieuSung" class="col-sm-2 col-form-label">Số hiệu súng</label>
                                 <div class="col-sm-4">
-                                    <input asp-for="SoHieuSung" class="form-control" name="sosung" />
+                                    <input asp-for="SoHieuSung" class="form-control" name="sosung" asp-readonly="true" />
                                 </div>
-                                <span asp-validation-for="SoHieuSung" class="text-danger"></span>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-3"></div>
@@ -46,26 +45,14 @@
                                 <div class="col-sm-3"></div>
                                 <label asp-for="MaLoaiSung" class="col-sm-2 col-form-label">Loại súng</label>
                                 <div class="col-sm-4">
-                                    <select name="MaLoaiSung" class="form-control">
-                                        <option value="" class="form-control"></option>
-                                        @foreach (var item in ViewBag.dsLoaiSung)
-                                        {
-                                            <option value="@item.MaLoaiSung" class="form-control">@item.TenLoaiSung</option>
-                                        }
-                                    </select>
+                                    <input asp-for="MaLoaiSung" class="form-control" name="MaLoaiSung" asp-readonly="true" />
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-3"></div>
                                 <label asp-for="SoQd" class="col-sm-2 col-form-label">Số Quyết định</label>
                                 <div class="col-sm-4">
-                                    <select name="SoQd" class="form-control">
-                                        <option value="" class="form-control"></option>
-                                        @foreach (var item in ViewBag.dsQD)
-                                        {
-                                            <option value="@item.SoQd" class="form-control">@item.SoQd</option>
-                                        }
-                                    </select>
+                                    <input asp-for="SoQd" class="form-control" name="SoQd" asp-readonly="true" />
                                 </div>
                             </div>
                             <div class="form-group row">

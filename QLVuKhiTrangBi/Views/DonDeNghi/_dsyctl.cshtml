@@ -1,0 +1,50 @@
+﻿@model IEnumerable<QLVuKhiTrangBi.Models.Yeucaumuonvktb>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Danh sách yêu cầu mượn vũ khí trang bị đã được duyệt</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Mã yêu cầu</th>
+                                    <th>Cán bộ đại đội</th>
+                                    <th>Thời gian dự kiến mượn</th>
+                                    <th>Thời gian dự kiến trả</th>
+                                    <th>Trạng thái</th>
+                                    <th>Ghi chú</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.MaYc</td>
+                                            <td>@item.MaCanBoDaiDoiNavigation.HoTen</td>
+                                            <td>@item.ThoiGianDuKienMuon</td>
+                                            <td>@item.ThoiGianDuKienTra</td>
+                                            <td>@item.TrangThai</td>
+                                            <td>@item.GhiChu</td>
+                                            <td>
+                                                <a asp-action="ChoMuon" asp-route-id="@item.MaYc">Cho mượn</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

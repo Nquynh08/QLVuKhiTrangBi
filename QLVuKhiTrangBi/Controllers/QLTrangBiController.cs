@@ -97,13 +97,13 @@ namespace QLVuKhiTrangBi.Controllers
                 return View();
             }
         }
-        public IActionResult Delete(string id)
-        {
-            var tb = db.TrangBis.Find(id);
-            db.TrangBis.Remove(tb);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+        //public IActionResult Delete(string id)
+        //{
+        //    var tb = db.TrangBis.Find(id);
+        //    db.TrangBis.Remove(tb);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
         public IActionResult Edit(string id)
         {
             var tb = db.TrangBis.Find(id);
@@ -114,12 +114,13 @@ namespace QLVuKhiTrangBi.Controllers
             return View(tb);
         }
         [HttpPost]
+        // sửa trang bị là chỉ sửa số lượng trang bị không dùng được
         public IActionResult Edit(TrangBi model)
         {
             var tb = db.TrangBis.Find(model.MaTrangBi);
             try
             {
-
+                tb.KhongDungDuoc = model.KhongDungDuoc;
                 db.TrangBis.Update(tb);
                 db.SaveChanges();
                 return RedirectToAction("Index");

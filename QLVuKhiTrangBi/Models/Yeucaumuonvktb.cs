@@ -7,6 +7,8 @@ public partial class Yeucaumuonvktb
 {
     public int MaYc { get; set; }
 
+    public string? TenYc { get; set; }
+
     public string? MaDaiDoi { get; set; }
 
     public string? MaCanBoDaiDoi { get; set; }

@@ -727,6 +727,9 @@ public partial class QlvuKhiTrangBiContext : DbContext
             entity.Property(e => e.MaDaiDoi)
                 .HasMaxLength(5)
                 .IsFixedLength();
+            entity.Property(e => e.TenYc)
+                .HasMaxLength(100)
+                .HasColumnName("TenYC");
             entity.Property(e => e.ThoiGianDuKienMuon).HasColumnType("datetime");
             entity.Property(e => e.ThoiGianDuKienTra).HasColumnType("datetime");
             entity.Property(e => e.TrangThai).HasMaxLength(50);
