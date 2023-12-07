@@ -19,26 +19,23 @@
                 <div class="form-group row d-none" id="op1">
                     <hr />
                     <label class="col-sm-2 col-form-label">Số hiệu súng</label>
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <input class="form-control" name="sosung" value="@sung.SoHieuSung" />
                     </div>
 
-                    <div class="form-group row">
-                        <div class="col-sm-3"></div>
-                        <label class="col-sm-2 col-form-label">Số Quyết định</label>
-                        <div class="col-sm-4">
-                            <select name="SoQd" class="form-control">
-                                <option value="" class="form-control"></option>
-                                @foreach (var item in ViewBag.dsQD)
-                                {
-                                    <option value="@item.SoQd" class="form-control">@item.SoQd</option>
-                                }
-                            </select>
-                        </div>
+                    <label class="col-sm-2 col-form-label">Số Quyết định</label>
+                    <div class="col-sm-2">
+                        <select name="SoQd" class="form-control">
+                            <option value="" class="form-control"></option>
+                            @foreach (var item in ViewBag.dsQD)
+                            {
+                                <option value="@item.SoQd" class="form-control">@item.SoQd</option>
+                            }
+                        </select>
                     </div>
 
                     <input type="submit" value="Xóa" class="btn btn-primary col-sm-1" />
-                     
+
                 </div>
             </form>
             <form asp-action="Xoa2">
@@ -46,10 +43,13 @@
                 <div class="form-group row d-none" id="op2">
                     <hr />
                     <label class="col-sm-2 col-form-label">Số hiệu súng</label>
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <input class="form-control" name="sosung" value="@sung.SoHieuSung" />
                     </div>
-
+                    <label class="col-sm-1 col-form-label">Lý do:</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" name="lydo" />
+                    </div>
                     <input type="submit" value="Xóa" class="btn btn-primary col-sm-1" />
                 </div>
             </form>
@@ -58,8 +58,12 @@
                 <div class="form-group row d-none" id="op3">
                     <hr />
                     <label class="col-sm-2 col-form-label">Số hiệu súng</label>
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <input class="form-control" name="sosung" value="@sung.SoHieuSung" />
+                    </div>
+                    <label class="col-sm-2 col-form-label">Mã biên bản bàn giao QK</label>
+                    <div class="col-sm-2">
+                        <input class="form-control" name="mabb" value="@ViewBag.bbQK" />
                     </div>
 
                     <input type="submit" value="Xóa" class="btn btn-primary col-sm-1" />

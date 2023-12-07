@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QLVuKhiTrangBi.Data;
 using QLVuKhiTrangBi.Models;
+using System;
 using System.Collections.Immutable;
 
 namespace QLVuKhiTrangBi.Controllers
@@ -66,7 +67,7 @@ namespace QLVuKhiTrangBi.Controllers
                 db.BbmuonTraSungs.Add(objSung);
 
                 // ghi nhận súng đang được dùng
-                var s = db.Sungs.Find(soSung[i]);
+                var s = db.Sungs.SingleOrDefault(s => s.SoHieuSung == soSung[i]);
                 s.SuDung = false; 
                 db.Sungs.Update(s);
             }
@@ -84,7 +85,7 @@ namespace QLVuKhiTrangBi.Controllers
                 db.BbmuonTraTbs.Add(objTB);
 
                 // ghi nhận số lượng trang bị đang được dùng hoặc không dùng được nữa
-                var tb = db.TrangBis.Find(MaTrangBi[i]);
+                var tb = db.TrangBis.SingleOrDefault(m => m.MaTrangBi == MaTrangBi[i]);
                 tb.KhongDungDuoc += sl[i];
                 db.TrangBis.Update(tb);
             }
@@ -192,6 +193,69 @@ namespace QLVuKhiTrangBi.Controllers
             ViewBag.bbTB = db.BbmuonTraTbs.Where(b => b.MaBienBan == bienbangac.MaBienBan).ToList();
 
             return View();
+        }
+
+        public IActionResult BaoDuong(int id)
+        {
+            ViewBag.id = id;
+            var ngayGac = db.LichGacs.Find(id);
+            DateTime ngay = ngayGac.Ngay;
+            ViewBag.ngay = ngay;
+            DateTime ngay1 = ngay.AddDays(1);
+            ViewBag.ngay1 = ngay1;
+
+            var ten = "Bàn giao vũ khí, trang bị, vật chất canh gác";
+            var bienbangac = db.BbmuonTraVktbs
+            .Where(b => b.TenBienBan == ten && b.NgayGac == ngay)
+            .SingleOrDefault();
+
+            var daidoi = bienbangac.DaiDoiGac;
+            ViewBag.daidoi = daidoi;
+            ViewBag.dsCBc = db.CanBoDaiDois.Where(c => c.MaDaiDoi == daidoi).ToList();
+            ViewBag.bienbangac = bienbangac;
+            ViewBag.bbSung = db.BbmuonTraSungs.Where(b => b.MaBienBan == bienbangac.MaBienBan).ToList();
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult BaoDuong(int id, string bb, DateTime thoigian, string daidoi, string cbdaidoi, string canbokho,
+            string loaiBD, int thoiGianBD, List<string> sosung, List<string> tinhtrang, List<string> GhiChu)
+        {
+            var baoduong = new BbbaoDuong()
+            {
+                MabbBaoDuong = string.Format("BD-Gac-{0}", bb),
+                TenbbBaoDuong = string.Format("Bảo dưỡng VKTBVC trong ca gác ngày - {0}", bb),
+                LoaiBaoDuong = loaiBD,
+                ThoiGian = thoigian,
+                ThoiGianBaoDuong = thoiGianBD,
+                CanBoDaiDoi = cbdaidoi,
+                DaiDoi = daidoi,
+                CanBoKho = canbokho,
+            };
+            db.BbbaoDuongs.Add(baoduong);
+            db.SaveChanges();
+
+            for(int i=0; i<sosung.Count();i++)
+            {
+                var ct = new CtbaoDuong()
+                {
+                    MabbBaoDuong = baoduong.MabbBaoDuong,
+                    SoHieuSung = sosung[i],
+                    TinhTrang = tinhtrang[i],
+                    GhiChu = GhiChu[i],
+                };
+                db.CtbaoDuongs.Add(ct);
+            }
+
+            db.SaveChanges();
+
+            var ngayGac = db.LichGacs.Find(id);
+            ngayGac.GhiChu += "Đã bảo dưỡng";
+            db.LichGacs.Update(ngayGac);
+            db.SaveChanges();
+
+            return RedirectToAction("LichGac");
         }
     }
 }

@@ -24,6 +24,8 @@ public partial class QlvuKhiTrangBiContext : DbContext
 
     public virtual DbSet<BbbanGiaoQk> BbbanGiaoQks { get; set; }
 
+    public virtual DbSet<BbbaoDuong> BbbaoDuongs { get; set; }
+
     public virtual DbSet<BbmuonTraSung> BbmuonTraSungs { get; set; }
 
     public virtual DbSet<BbmuonTraTb> BbmuonTraTbs { get; set; }
@@ -39,6 +41,8 @@ public partial class QlvuKhiTrangBiContext : DbContext
     public virtual DbSet<CanBoPhuTrach> CanBoPhuTraches { get; set; }
 
     public virtual DbSet<CanBoTieuDoan> CanBoTieuDoans { get; set; }
+
+    public virtual DbSet<CtbaoDuong> CtbaoDuongs { get; set; }
 
     public virtual DbSet<DaiDoi> DaiDois { get; set; }
 
@@ -177,6 +181,29 @@ public partial class QlvuKhiTrangBiContext : DbContext
             entity.HasOne(d => d.NguoiTaoNavigation).WithMany(p => p.BbbanGiaoQks)
                 .HasForeignKey(d => d.NguoiTao)
                 .HasConstraintName("FK_BBBanGiaoQK_CanBoPhuTrach");
+        });
+
+        modelBuilder.Entity<BbbaoDuong>(entity =>
+        {
+            entity.HasKey(e => e.MabbBaoDuong);
+
+            entity.ToTable("BBBaoDuong");
+
+            entity.Property(e => e.MabbBaoDuong)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.CanBoDaiDoi)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.CanBoKho)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.DaiDoi)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.LoaiBaoDuong).HasMaxLength(50);
+            entity.Property(e => e.TenbbBaoDuong).HasMaxLength(100);
+            entity.Property(e => e.ThoiGian).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<BbmuonTraSung>(entity =>
@@ -383,6 +410,26 @@ public partial class QlvuKhiTrangBiContext : DbContext
                 .HasMaxLength(10)
                 .IsFixedLength()
                 .HasColumnName("SDT");
+        });
+
+        modelBuilder.Entity<CtbaoDuong>(entity =>
+        {
+            entity.HasKey(e => new { e.MabbBaoDuong, e.SoHieuSung });
+
+            entity.ToTable("CTBaoDuong");
+
+            entity.Property(e => e.MabbBaoDuong)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.SoHieuSung)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.GhiChu).HasColumnType("ntext");
+
+            entity.HasOne(d => d.MabbBaoDuongNavigation).WithMany(p => p.CtbaoDuongs)
+                .HasForeignKey(d => d.MabbBaoDuong)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_CTBaoDuong_BBBaoDuong");
         });
 
         modelBuilder.Entity<DaiDoi>(entity =>

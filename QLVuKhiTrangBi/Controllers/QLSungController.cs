@@ -79,6 +79,12 @@ namespace QLVuKhiTrangBi.Controllers
             ViewBag.Sung = s;
             var dsQD = db.QuyetDinhs.ToList();
             ViewBag.dsQD = dsQD;
+            var bbQK = db.BanGiaoQkSungs
+                 .Where(b => b.SoHieuSung == id)
+                 .Select(b => b.MaBienBan)
+                 .FirstOrDefault();
+            ViewBag.bbQK = bbQK;    
+
             return View();
         }
         [HttpPost]

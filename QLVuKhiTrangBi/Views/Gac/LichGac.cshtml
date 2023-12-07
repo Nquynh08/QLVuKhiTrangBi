@@ -42,7 +42,7 @@
                                             <td>@item.TrangThai</td>
                                             <td>@item.GhiChu</td>
                                             <td>
-                                                @if(item.Ngay < DateTime.Today || item.TrangThai == "Đã hoàn thành")
+                                                @if(item.TrangThai == "Đã hoàn thành")
                                                 {
                                                     <a asp-action="ChiTiet" asp-route-id="@item.Stt">Chi tiết bàn giao</a>
                                                 }
@@ -52,8 +52,17 @@
                                                 }
                                                 @if (item.TrangThai == "Đang gác")
                                                 {
-                                                    <a asp-action="Tra" asp-route-id="@item.Stt" >Trả VKTB</a>
+
+                                                    @if (item.GhiChu != null && item.GhiChu.Contains("Đã bảo dưỡng"))
+                                                    {
+                                                        <a asp-action="Tra" asp-route-id="@item.Stt">Trả VKTB</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a asp-action="BaoDuong" asp-route-id="@item.Stt">Bảo dưỡng VKTB</a>
+                                                    }
                                                 }
+
                                             </td>
                                         </tr>
                                     }

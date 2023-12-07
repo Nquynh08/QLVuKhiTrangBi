@@ -1,0 +1,129 @@
+﻿@{
+    ViewData["Title"] = "BaoDuongVKTBGac";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var bienbangac = ViewBag.bienbangac;
+    var bbSung = ViewBag.bbSung;
+}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Bảo dưỡng VKTBVC trong ca gác ngày @ViewBag.ngay.ToString("dd/MM/yyyy")</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="BaoDuong">
+                            <input type="hidden" name="bb" value="@ViewBag.ngay.ToString("dd/MM/yyyy")" />
+                            <input type="hidden" name="lichgac" value="@ViewBag.id" />
+                            <div class="row">
+                                <div class="form-group row col-3">
+                                    <label class="col-sm-4 col-form-label">Thời gian</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" name="thoigian" value="@DateTime.Now" />
+                                    </div>
+                                </div>
+                                <div class="form-group row col-4">
+                                    <label class="col-sm-4 col-form-label">Đại đội</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" name="daidoi" value="@ViewBag.daidoi" />
+                                    </div>
+                                </div>
+                                <div class="form-group row col-5">
+                                    <label class="col-sm-4 col-form-label">Cán bộ đại đội:</label>
+                                    <div class="col-sm-8">
+                                        <select name="cbdaidoi" class="form-control">
+                                            @foreach (var item in ViewBag.dsCBc)
+                                            {
+                                                <option value="@item.HoTen" class="form-control">@item.HoTen</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row col-4">
+                                    <label class="col-sm-6 col-form-label">Cán bộ phụ trách kho:</label>
+                                    <div class="col-sm-6">
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <input type="text" class="form-control" name="canbokho" value="@User.Identity.Name" />
+                                        }
+                                    </div>
+                                </div>
+                                <div class="form-group row col-5">
+                                    <label class="col-sm-4 col-form-label">Loại bảo dưỡng</label>
+                                    <div class="col-sm-8">
+                                        <select name="loaiBD" class="form-control">
+                                            <option value="Sau nhiệm vụ" class="form-control">Bảo dưỡng sau thực hiện nhiệm vụ</option>
+                                            <option value="Định kỳ" class="form-control">Bảo dưỡng định kỳ</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row col-3">
+                                    <label class="col-sm-6 col-form-label">Thời gian bảo dưỡng (phút):</label>
+                                    <div class="col-sm-6">
+                                        <select name="thoiGianBD" class="form-control">
+                                            <option value="5" class="form-control">5 phút</option>
+                                            <option value="15" class="form-control">15 phút</option>
+                                            <option value="45" class="form-control">45 phút</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Nội dung</th>
+                                        <th>Chi tiết</th>
+                                        <th>Tình trạng</th>
+                                        <th>Ghi chú</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var s in bbSung)
+                                    {
+                                        if (s.MuonTra == 1)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <strong>Súng</strong>
+                                                    </div>
+                                                </td>
+                                                <td><input name="sosung" value="@s.SoHieuSung" /></td>
+                                                <td>
+                                                    <select name="tinhtrang" class="form-control">
+                                                        <option value="Bảo đảm">Bảo đảm</option>
+                                                        <option value="Hỏng">Hỏng</option>
+                                                        <option value="Thiếu trang bị">Thiếu trang bị</option>
+                                                    </select>
+                                                </td>
+                                                <td><input type="text" name="GhiChu" class="form-control"/></td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+
+                            <a class="btn btn-secondary" href="~/Gac/LichGac">Quay lại</a>
+                            <input type="submit" class="btn btn-primary" value="Xác nhận" />
+                        </form>
+                    </div>
+                    <div class="card-footer">
+                        Footer
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
