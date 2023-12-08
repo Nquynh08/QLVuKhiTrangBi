@@ -46,7 +46,7 @@ namespace QLVuKhiTrangBi.Controllers
             {
                 TenBienBan = "Bàn giao vũ khí, trang bị, vật chất canh gác",
                 NgayGac = DateTime.Today,
-                DaiDoiGac = gac.DaiDoiGac,
+                DaiDoi = gac.DaiDoiGac,
                 CbkhoGiao = nguoigiao,
                 CbdaidoiNhan = nguoinhan,
                 ThoiGianMuon = thoiGianMuon,
@@ -209,7 +209,7 @@ namespace QLVuKhiTrangBi.Controllers
             .Where(b => b.TenBienBan == ten && b.NgayGac == ngay)
             .SingleOrDefault();
 
-            var daidoi = bienbangac.DaiDoiGac;
+            var daidoi = bienbangac.DaiDoi;
             ViewBag.daidoi = daidoi;
             ViewBag.dsCBc = db.CanBoDaiDois.Where(c => c.MaDaiDoi == daidoi).ToList();
             ViewBag.bienbangac = bienbangac;

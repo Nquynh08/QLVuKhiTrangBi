@@ -35,7 +35,12 @@
                                             <td>@item.TrangThai</td>
                                             <td>@item.GhiChu</td>
                                             <td>
-                                                <a asp-action="ChoMuon" asp-route-id="@item.MaYc">Cho mượn</a>
+                                                @if (item.GhiChu != null && item.GhiChu.Contains("Đang mượn"))
+                                                {
+                                                    <a asp-action="TraVKTB" asp-route-id="@item.MaYc">Trả VKTB</a>
+                                                }else{
+                                                    <a asp-action="ChoMuon" asp-route-id="@item.MaYc">Cho mượn</a>
+                                                }
                                             </td>
                                         </tr>
                                     }

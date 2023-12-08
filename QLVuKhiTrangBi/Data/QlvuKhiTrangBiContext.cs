@@ -257,7 +257,7 @@ public partial class QlvuKhiTrangBiContext : DbContext
             entity.Property(e => e.CbkhoNhan)
                 .HasMaxLength(50)
                 .HasColumnName("cbkhoNhan");
-            entity.Property(e => e.DaiDoiGac)
+            entity.Property(e => e.DaiDoi)
                 .HasMaxLength(5)
                 .IsFixedLength();
             entity.Property(e => e.GhiChu)
@@ -266,11 +266,11 @@ public partial class QlvuKhiTrangBiContext : DbContext
             entity.Property(e => e.NgayGac).HasColumnType("date");
             entity.Property(e => e.TenBienBan).HasMaxLength(100);
             entity.Property(e => e.ThoiGianMuon)
-                .HasMaxLength(10)
+                .HasMaxLength(50)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.ThoiGianTra)
-                .HasMaxLength(10)
+                .HasMaxLength(50)
                 .IsUnicode(false)
                 .IsFixedLength();
         });
@@ -602,7 +602,7 @@ public partial class QlvuKhiTrangBiContext : DbContext
             entity.Property(e => e.DonViTinh)
                 .HasMaxLength(10)
                 .IsFixedLength();
-            entity.Property(e => e.GhiChu).HasColumnType("text");
+            entity.Property(e => e.GhiChu).HasColumnType("ntext");
             entity.Property(e => e.MaLoaiSung)
                 .HasMaxLength(10)
                 .IsFixedLength();
@@ -656,7 +656,7 @@ public partial class QlvuKhiTrangBiContext : DbContext
             entity.Property(e => e.DonViTinh)
                 .HasMaxLength(10)
                 .IsFixedLength();
-            entity.Property(e => e.GhiChu).HasColumnType("text");
+            entity.Property(e => e.GhiChu).HasColumnType("ntext");
             entity.Property(e => e.MaLoaiTb)
                 .HasMaxLength(10)
                 .IsFixedLength()

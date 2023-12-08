@@ -26,5 +26,11 @@ namespace QLVuKhiTrangBi.Controllers
             ViewBag.dsTB = bbTB;
             return View();
         }
+
+        public IActionResult BbMuonTraVKTB()
+        {
+            var dsbb = db.BbmuonTraVktbs.ToList();
+            return View(dsbb);
+        }
     }
 }

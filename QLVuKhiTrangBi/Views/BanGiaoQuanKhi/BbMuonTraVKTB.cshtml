@@ -1,0 +1,56 @@
+﻿@model IEnumerable<QLVuKhiTrangBi.Models.BbmuonTraVktb>
+
+@{
+    ViewData["Title"] = "BbMuonTraVKTB";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int count = 1;
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Danh sách biên bản mượn trả vũ khí, trang bị, vật chất</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên biên bản</th>
+                                    <th>Đại đội</th>
+                                    <th>Thời gian mượn</th>
+                                    <th>Thời gian trả</th>
+                                    <th>Ghi chú</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@(count++)</td>
+                                            <td>@item.TenBienBan</td>
+                                            <td>@item.DaiDoi</td>
+                                            <td>@item.ThoiGianMuon</td>
+                                            <td>@item.ThoiGianTra</td>
+                                            <td>@item.GhiChu</td>
+                                            <td>
+                                                <a asp-action="Chi tiết" asp-route-id="@item.MaBienBan">Xem chi tiết</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
