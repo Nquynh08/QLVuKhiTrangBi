@@ -9,11 +9,42 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Danh sách súng</h3>
+                        <h3 class="card-title"><b>Danh sách súng</b></h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="example2" class="table table-bordered table-hover">
+                        <div class="row">
+                            <div class="col-2">
+                                <lable>Loại súng</lable>
+                                <select name="loai" class="form-control form-control-sm">
+                                    <option value="">Chọn loại súng</option>
+                                    @foreach(var loai in ViewBag.loaisung)
+                                    {
+                                        <option value="@loai.MaLoaiSung">@loai.TenLoaiSung</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-2">
+                                <lable>Phân cấp chất lượng</lable>
+                                <select name="phanCap" class="form-control form-control-sm">
+                                    <option value="">Chọn phân cấp</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                            <div class="col-6"></div>
+                            
+                            <div id="example1_filter" class="dataTables_filter">
+                                <label>
+                                    Tìm kiếm:
+                                    <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example1" name="tkiem">
+                                </label>
+                                </div>
+                        </div>
+                        <table id="example1" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
                                     <th>STT</th>

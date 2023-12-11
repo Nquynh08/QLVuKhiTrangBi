@@ -18,10 +18,17 @@ namespace QLVuKhiTrangBi.Controllers
             ViewBag.dsQD = dsQD;
             return View();
         }
-        public PartialViewResult DSSung()
+        public PartialViewResult DSSung(string loai, int phanCap, string tkiem)
         {
-            var dssung = db.Sungs.Where(s => s.SuDung==true).ToList();
+            ViewBag.loaisung = db.LoaiSungs.ToList();
+
+            //var dssung = (from s in db.Sungs
+            //             where (string.IsNullOrEmpty(loai) || s.MaLoaiSung.Contains(loai))
+            //              && (phanCap == null || s.PhanCap==phanCap)
+            //             select s).ToList();
+            var dssung = db.Sungs.ToList();
             return PartialView("_dssung", dssung);
+
         }
         [HttpPost]
         public IActionResult Index(string sosung, string dvt, int phancap, string MaLoaiSung, string SoQd)
