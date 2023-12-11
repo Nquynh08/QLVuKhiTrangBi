@@ -78,7 +78,11 @@ public partial class QlvuKhiTrangBiContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=NGUYEN-THUY-QUY\\QUYNH;Initial Catalog=QLVuKhiTrangBi;Encrypt=false;Trusted_Connection=True;TrustServerCertificate=True;");
+<<<<<<< HEAD
+        => optionsBuilder.UseSqlServer("Data Source=hiew\\nthieu;Initial Catalog=QLVuKhiTrangBi;User ID=sa;Encrypt=false;Trusted_Connection=True;TrustServerCertificate=True;");
+=======
+        => optionsBuilder.UseSqlServer("Data Source=ESTELLA\\NHAT;Initial Catalog=QLVuKhiTrangBi;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+>>>>>>> 29a5e17bdca31020c6141c223fa7f7ef2dd1f34f
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -134,7 +138,7 @@ public partial class QlvuKhiTrangBiContext : DbContext
 
         modelBuilder.Entity<BbbanGiaoKho>(entity =>
         {
-            entity.HasKey(e => e.MaBanGiaoKho).HasName("PK__BBBanGia__AE98DBFF76277C8A");
+            entity.HasKey(e => e.MaBanGiaoKho).HasName("PK__BBBanGia__AE98DBFFD11DB6EC");
 
             entity.ToTable("BBBanGiaoKho");
 
@@ -277,7 +281,7 @@ public partial class QlvuKhiTrangBiContext : DbContext
 
         modelBuilder.Entity<BienCheSung>(entity =>
         {
-            entity.HasKey(e => e.MaBienCheSung).HasName("PK__BienCheS__C8A8A447F592EE45");
+            entity.HasKey(e => e.MaBienCheSung).HasName("PK__BienCheS__C8A8A447C9279DA5");
 
             entity.ToTable("BienCheSung");
 
@@ -297,11 +301,11 @@ public partial class QlvuKhiTrangBiContext : DbContext
 
             entity.HasOne(d => d.MaHocVienNavigation).WithMany(p => p.BienCheSungs)
                 .HasForeignKey(d => d.MaHocVien)
-                .HasConstraintName("FK__BienCheSu__MaHoc__5224328E");
+                .HasConstraintName("FK__BienCheSu__MaHoc__76969D2E");
 
             entity.HasOne(d => d.MaLuotBienCheNavigation).WithMany(p => p.BienCheSungs)
                 .HasForeignKey(d => d.MaLuotBienChe)
-                .HasConstraintName("FK__BienCheSu__MaLuo__531856C7");
+                .HasConstraintName("FK__BienCheSu__MaLuo__778AC167");
 
             entity.HasOne(d => d.SoHieuSungNavigation).WithMany(p => p.BienCheSungs)
                 .HasForeignKey(d => d.SoHieuSung)
@@ -310,7 +314,7 @@ public partial class QlvuKhiTrangBiContext : DbContext
 
         modelBuilder.Entity<BienCheTb>(entity =>
         {
-            entity.HasKey(e => e.MaBienCheTb).HasName("PK__BienCheT__B56E0D9712FC23FB");
+            entity.HasKey(e => e.MaBienCheTb).HasName("PK__BienCheT__B56E0D97A18FCABB");
 
             entity.ToTable("BienCheTB");
 
@@ -331,11 +335,11 @@ public partial class QlvuKhiTrangBiContext : DbContext
 
             entity.HasOne(d => d.MaHocVienNavigation).WithMany(p => p.BienCheTbs)
                 .HasForeignKey(d => d.MaHocVien)
-                .HasConstraintName("FK__BienCheTB__MaHoc__540C7B00");
+                .HasConstraintName("FK__BienCheTB__MaHoc__797309D9");
 
             entity.HasOne(d => d.MaLuotBienCheNavigation).WithMany(p => p.BienCheTbs)
                 .HasForeignKey(d => d.MaLuotBienChe)
-                .HasConstraintName("FK__BienCheTB__MaLuo__55009F39");
+                .HasConstraintName("FK__BienCheTB__MaLuo__7A672E12");
 
             entity.HasOne(d => d.MaTrangBiNavigation).WithMany(p => p.BienCheTbs)
                 .HasForeignKey(d => d.MaTrangBi)
@@ -441,7 +445,7 @@ public partial class QlvuKhiTrangBiContext : DbContext
 
         modelBuilder.Entity<HocVien>(entity =>
         {
-            entity.HasKey(e => e.MaHocVien).HasName("PK__HocVien__685B0E6A4A7757D3");
+            entity.HasKey(e => e.MaHocVien).HasName("PK__HocVien__685B0E6AA7768655");
 
             entity.ToTable("HocVien");
 
@@ -455,7 +459,7 @@ public partial class QlvuKhiTrangBiContext : DbContext
 
             entity.HasOne(d => d.MaDaiDoiNavigation).WithMany(p => p.HocViens)
                 .HasForeignKey(d => d.MaDaiDoi)
-                .HasConstraintName("FK__HocVien__MaDaiDo__56E8E7AB");
+                .HasConstraintName("FK__HocVien__MaDaiDo__7E37BEF6");
         });
 
         modelBuilder.Entity<LichGac>(entity =>
@@ -504,7 +508,7 @@ public partial class QlvuKhiTrangBiContext : DbContext
 
         modelBuilder.Entity<LuotBienChe>(entity =>
         {
-            entity.HasKey(e => e.MaLuotBienChe).HasName("PK__LuotBien__187D56202FF722A5");
+            entity.HasKey(e => e.MaLuotBienChe).HasName("PK__LuotBien__187D56206823A320");
 
             entity.ToTable("LuotBienChe");
 
@@ -512,12 +516,19 @@ public partial class QlvuKhiTrangBiContext : DbContext
                 .HasMaxLength(10)
                 .IsFixedLength();
             entity.Property(e => e.GhiChu).HasMaxLength(100);
+            entity.Property(e => e.MaDaiDoi)
+                .HasMaxLength(5)
+                .IsFixedLength();
             entity.Property(e => e.ThoiGianBd)
                 .HasColumnType("date")
                 .HasColumnName("ThoiGianBD");
             entity.Property(e => e.ThoiGianKt)
                 .HasColumnType("date")
                 .HasColumnName("ThoiGianKT");
+
+            entity.HasOne(d => d.MaDaiDoiNavigation).WithMany(p => p.LuotBienChes)
+                .HasForeignKey(d => d.MaDaiDoi)
+                .HasConstraintName("FK__LuotBienC__MaDai__14270015");
         });
 
         modelBuilder.Entity<NhomNguoiDung>(entity =>

@@ -12,4 +12,6 @@ public partial class DaiDoi
     public virtual ICollection<CanBoDaiDoi> CanBoDaiDois { get; set; } = new List<CanBoDaiDoi>();
 
     public virtual ICollection<HocVien> HocViens { get; set; } = new List<HocVien>();
+
+    public virtual ICollection<LuotBienChe> LuotBienChes { get; set; } = new List<LuotBienChe>();
 }

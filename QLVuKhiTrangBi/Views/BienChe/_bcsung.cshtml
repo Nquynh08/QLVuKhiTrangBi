@@ -1,0 +1,46 @@
+﻿@model IEnumerable<QLVuKhiTrangBi.Models.BienCheSung>
+@{
+    int count = 1;
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Danh sách biên chế súng</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="bgk" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Mã biên chế súng</th>
+                                    <th>
+                                        Mã học viên
+                                    </th>
+                                    <th>Số hiệu súng</th>
+                                    <th>Ghi chú</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@(count++)</td>
+                                        <td>@item.MaBienCheSung</td>
+                                        <td>@item.MaHocVienNavigation.TenHocVien</td>
+                                        <td>@item.SoHieuSung</td>
+                                        <td>@item.GhiChu</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

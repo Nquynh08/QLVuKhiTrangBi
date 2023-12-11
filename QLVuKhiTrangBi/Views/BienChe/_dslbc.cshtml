@@ -1,0 +1,53 @@
+﻿@model IEnumerable<QLVuKhiTrangBi.Models.LuotBienChe>
+@{
+    int count = 1;
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Danh sách lượt biên chế</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="bgk" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Mã lượt biên chế</th>
+                                    <th>
+                                        Thời gian bắt đầu
+                                    </th>
+                                    <th>Thời gian kết thúc</th>
+                                    <th>Ghi chú</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@(count++)</td>
+                                        <td>@item.MaLuotBienChe</td>
+                                        <td>@String.Format("{0:dd/MM/yyyy}",item.ThoiGianBd)</td>
+                                        <td>@String.Format("{0:dd/MM/yyyy}",item.ThoiGianKt)</td>
+                                        <td>@item.GhiChu</td>
+                                        <td>
+                                            <a asp-action="AddBCSung" asp-route-malbc="@item.MaLuotBienChe">Biên chế súng</a>
+                                        </td>
+                                        <td>
+                                            <a asp-action="AddBCTb" asp-route-malbc="@item.MaLuotBienChe">Biên chế trang bị</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
